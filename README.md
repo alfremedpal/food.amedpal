@@ -1,43 +1,80 @@
-# Astro Starter Kit: Minimal
+# food.amedpal
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+A personal food blog built with [Astro](https://astro.build) — honest **reviews
+of the food I eat** (dishes, restaurants, cravings). Static, bilingual (Spanish
+primary / English), with light and dark themes.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/        # Header, Footer, ReviewCard, Rating, ThemeToggle, LanguagePicker
+├── content/
+│   └── reviews/
+│       ├── es/        # Spanish reviews (MDX)
+│       └── en/        # English reviews (MDX)
+├── i18n/
+│   ├── ui.ts          # UI strings + localized route segments (es is source of truth)
+│   └── utils.ts       # t(), localizedPath(), date formatting…
+├── layouts/           # BaseLayout, ReviewLayout
+├── lib/reviews.ts     # querying reviews by language
+├── pages/
+│   ├── index.astro          # ES home        →  /
+│   ├── resenas/            # ES reviews     →  /resenas/…
+│   ├── sobre-mi.astro       # ES about       →  /sobre-mi/
+│   └── en/                  # English mirror →  /en/…
+├── styles/global.css  # design tokens + light/dark themes
+└── content.config.ts  # reviews collection schema
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Languages
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Spanish is the default and served from the root (`/`); English lives under
+`/en/`. Config is in `astro.config.mjs` (`i18n`). UI strings live in
+`src/i18n/ui.ts` — add a key to **both** `es` and `en`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Themes & type
 
-## 🧞 Commands
+Light and dark are driven by CSS variables in `src/styles/global.css` — a clean
+neutral light theme and a gray dark theme, both with a bright-green accent. The
+active theme is stored in `localStorage` and applied before first paint (inline
+script in `BaseLayout.astro`) to avoid a flash; toggle via the header button.
+Type is **Montserrat** (loaded from Google Fonts in `BaseLayout.astro`).
 
-All commands are run from the root of the project, from a terminal:
+## Adding a review
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Reviews are written in **MDX** (`.mdx`) rather than plain Markdown, so a review
+can `import` and use custom Astro/UI components inline (rating breakdowns, image
+galleries, maps…) as the blog grows. Everything you'd write in Markdown still
+works. Create a file under `src/content/reviews/<lang>/<slug>.mdx`:
 
-## 👀 Want to learn more?
+```markdown
+---
+title: Ham Croquettes at Casa Julia
+description: Creamy inside, crunchy outside. A classic that never misses.
+lang: en
+pubDate: 2026-08-20
+updatedDate: 2026-09-05  # optional — shown as "Edited on" when present
+rating: 4.5              # 0–5, halves allowed
+place: Casa Julia        # optional — restaurant / brand / stall
+location: Madrid         # optional — city or area
+tags: [croquettes, tapas]
+translationKey: croquetas-casa-julia   # optional — links the ES/EN versions
+heroImage: ./croquetas.jpg             # optional — relative to the .md file
+draft: false
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Review body in Markdown…
+```
+
+Give a review and its translation the **same `translationKey`** so the language
+switcher can jump between them. Drafts (`draft: true`) are hidden in production.
+
+## Commands
+
+| Command             | Action                                   |
+| :------------------ | :--------------------------------------- |
+| `pnpm dev`          | Dev server at `localhost:4321`           |
+| `pnpm build`        | Build to `./dist/`                       |
+| `pnpm preview`      | Preview the production build             |
+| `pnpm astro check`  | Type-check the project                   |

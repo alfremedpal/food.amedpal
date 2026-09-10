@@ -1,0 +1,183 @@
+---
+import { languages, type Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Map of language code → path for the equivalent page. */
+  alternates: Partial<Record<Lang, string>>;
+}
+const { lang, alternates } = Astro.props;
+const t = useTranslations(lang);
+const codes = Object.keys(languages) as Lang[];
+---
+
+<div class="lang-dd" data-lang-dd>
+  <button
+    type="button"
+    class="lang-btn"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label={t('lang.switch')}
+    data-lang-toggle
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"></path>
+    </svg>
+    <span class="code">{lang.toUpperCase()}</span>
+    <svg class="caret" width="12" height="12" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+      stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </button>
+
+  <ul class="lang-menu" role="menu">
+    {
+      codes.map((code) => {
+        const isCurrent = code === lang;
+        const href = alternates[code];
+        return (
+          <li role="none">
+            {isCurrent ? (
+              <span class="item" role="menuitem" aria-current="true">
+                {languages[code]}
+                <span class="check" aria-hidden="true">✓</span>
+              </span>
+            ) : href ? (
+              <a class="item" role="menuitem" href={href} hreflang={code}>
+                {languages[code]}
+              </a>
+            ) : (
+              <span class="item disabled" role="menuitem" aria-disabled="true">
+                {languages[code]}
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .lang-dd {
+    position: relative;
+  }
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 2.35rem;
+    padding: 0 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-elevated);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .lang-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .caret {
+    transition: transform 0.15s ease;
+  }
+  .lang-btn[aria-expanded='true'] .caret {
+    transform: rotate(180deg);
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    min-width: 9rem;
+    margin: 0;
+    padding: 0.3rem;
+    list-style: none;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    display: none;
+    z-index: 20;
+  }
+  .lang-dd[data-open] .lang-menu {
+    display: block;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 7px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    white-space: nowrap;
+  }
+  a.item:hover {
+    background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
+    color: var(--accent);
+  }
+  .item[aria-current='true'] {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .item.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .check {
+    color: var(--accent);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-lang-dd]').forEach((dd) => {
+    const btn = dd.querySelector('[data-lang-toggle]');
+    if (!btn) return;
+
+    // Persist an explicit language choice so it overrides browser detection.
+    dd.querySelectorAll('a.item[hreflang]').forEach((a) => {
+      a.addEventListener('click', () => {
+        try {
+          localStorage.setItem('lang', a.getAttribute('hreflang') as string);
+        } catch {}
+      });
+    });
+
+    const close = () => {
+      dd.removeAttribute('data-open');
+      btn.setAttribute('aria-expanded', 'false');
+    };
+    const toggle = () => {
+      const open = dd.hasAttribute('data-open');
+      if (open) {
+        close();
+      } else {
+        dd.setAttribute('data-open', '');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+    document.addEventListener('click', (e) => {
+      if (!dd.contains(e.target as Node)) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  });
+</script>

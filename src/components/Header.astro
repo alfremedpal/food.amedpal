@@ -1,0 +1,194 @@
+---
+import type { Lang } from '../i18n/ui';
+import {
+  useTranslations,
+  localizedPath,
+  routeSegment,
+} from '../i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguagePicker from './LanguagePicker.astro';
+
+interface Props {
+  lang: Lang;
+  alternates: Partial<Record<Lang, string>>;
+}
+const { lang, alternates } = Astro.props;
+const t = useTranslations(lang);
+
+const nav = [
+  {
+    href: localizedPath(lang, routeSegment(lang, 'reviews')),
+    label: t('nav.reviews'),
+  },
+];
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header" data-header>
+  <div class="container bar">
+    <a class="brand" href={localizedPath(lang)}>{t('site.title')}</a>
+
+    <div class="cluster">
+      <!-- Collapses behind the burger on mobile -->
+      <div class="collapsible" id="nav-menu">
+        <nav class="main-nav" aria-label={t('nav.reviews')}>
+          {
+            nav.map((item) => {
+              const path = item.href.replace(/\/$/, '') || '/';
+              return (
+                <a
+                  href={item.href}
+                  aria-current={path === current ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })
+          }
+        </nav>
+        <ThemeToggle lang={lang} />
+      </div>
+
+      <LanguagePicker lang={lang} alternates={alternates} />
+
+      <button
+        type="button"
+        class="burger icon-button"
+        id="nav-toggle"
+        aria-controls="nav-menu"
+        aria-expanded="false"
+        aria-label={t('nav.menu')}
+        data-nav-toggle
+      >
+        <svg class="i-open" width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"></path>
+        </svg>
+        <svg class="i-close" width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(160%) blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4rem;
+  }
+  .brand {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    min-width: 0;
+    margin-inline-end: auto;
+  }
+  .cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .collapsible {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .main-nav {
+    display: flex;
+    gap: 1.1rem;
+    font-size: 0.98rem;
+  }
+  .main-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .main-nav a:hover,
+  .main-nav a[aria-current='page'] {
+    color: var(--text);
+  }
+
+  /* Burger is hidden on desktop; its close icon only shows when open */
+  .burger {
+    display: none;
+  }
+  .burger .i-close {
+    display: none;
+  }
+  .burger[aria-expanded='true'] .i-open {
+    display: none;
+  }
+  .burger[aria-expanded='true'] .i-close {
+    display: inline;
+  }
+
+  @media (max-width: 640px) {
+    .brand {
+      font-size: 1.05rem;
+    }
+    .burger {
+      display: inline-flex;
+    }
+    .collapsible {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem 1.25rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+    .site-header[data-nav-open] .collapsible {
+      display: flex;
+    }
+    .main-nav {
+      flex-direction: column;
+      width: 100%;
+      font-size: 1.05rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-nav-toggle]').forEach((btn) => {
+    const header = btn.closest('[data-header]');
+    if (!header) return;
+
+    const setOpen = (open: boolean) => {
+      header.toggleAttribute('data-nav-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    btn.addEventListener('click', () =>
+      setOpen(!header.hasAttribute('data-nav-open')),
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+    // Close the menu after following the reviews link
+    header
+      .querySelectorAll('.main-nav a')
+      .forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  });
+</script>

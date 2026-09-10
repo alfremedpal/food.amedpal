@@ -1,0 +1,39 @@
+---
+import { render } from 'astro:content';
+import ReviewLayout from '../../../layouts/ReviewLayout.astro';
+import { getReviews, reviewSlug } from '../../../lib/reviews';
+import { localizedPath, routeSegment } from '../../../i18n/utils';
+import type { Lang } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const en = await getReviews('en');
+  const es = await getReviews('es');
+
+  return en.map((review) => {
+    const alternates: Partial<Record<Lang, string>> = {
+      en: localizedPath('en', `${routeSegment('en', 'reviews')}/${reviewSlug(review)}`),
+    };
+    const key = review.data.translationKey;
+    if (key) {
+      const match = es.find((e) => e.data.translationKey === key);
+      if (match) {
+        alternates.es = localizedPath(
+          'es',
+          `${routeSegment('es', 'reviews')}/${reviewSlug(match)}`,
+        );
+      }
+    }
+    return {
+      params: { slug: reviewSlug(review) },
+      props: { review, alternates },
+    };
+  });
+}
+
+const { review, alternates } = Astro.props;
+const { Content } = await render(review);
+---
+
+<ReviewLayout review={review} lang="en" alternates={alternates}>
+  <Content />
+</ReviewLayout>

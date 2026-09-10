@@ -1,0 +1,187 @@
+:root {
+  /* Neutral light theme */
+  --bg: #fafafa;
+  --bg-elevated: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #666c6a;
+  --border: #e6e8e7;
+  --accent: #16a34a; /* bright green */
+  --accent-hover: #15803d;
+  --accent-contrast: #ffffff;
+  --star: #22c55e;
+  --card-shadow: 0 1px 2px rgba(20, 20, 20, 0.05),
+    0 8px 24px rgba(20, 20, 20, 0.06);
+
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-sans);
+
+  --content-width: 68ch;
+  --page-width: 1080px;
+  --radius: 12px;
+
+  color-scheme: light;
+}
+
+/* Neutral gray dark theme — the tokens are shared by two triggers below. */
+:root[data-theme='dark'] {
+  --bg: #17181a;
+  --bg-elevated: #202225;
+  --text: #e8eaed;
+  --text-muted: #9aa0a6;
+  --border: #2e3033;
+  --accent: #4ade80; /* bright green, lifted for dark */
+  --accent-hover: #86efac;
+  --accent-contrast: #0d0e0f;
+  --star: #4ade80;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  color-scheme: dark;
+}
+
+/*
+ * Default to the browser/OS preference when the visitor hasn't picked a theme.
+ * This runs in CSS, so the right theme is applied before first paint and even
+ * with JavaScript disabled. An explicit choice (data-theme='light') opts out.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #17181a;
+    --bg-elevated: #202225;
+    --text: #e8eaed;
+    --text-muted: #9aa0a6;
+    --border: #2e3033;
+    --accent: #4ade80;
+    --accent-hover: #86efac;
+    --accent-contrast: #0d0e0f;
+    --star: #4ade80;
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.prose {
+  max-width: var(--content-width);
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose img {
+  margin-block: 1.5em;
+}
+
+/* Buttons / controls */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    color 0.15s ease;
+}
+.icon-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* Star rating */
+.rating {
+  position: relative;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+.rating .stars-bg {
+  color: var(--border);
+}
+.rating .stars-fg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--star);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,32 @@
+---
+interface Props {
+  value: number;
+  /** Show the numeric value next to the stars. */
+  showValue?: boolean;
+  class?: string;
+}
+const { value, showValue = true, class: className } = Astro.props;
+const clamped = Math.max(0, Math.min(5, value));
+const pct = (clamped / 5) * 100;
+---
+
+<span class:list={['rating-wrap', className]}>
+  <span class="rating" role="img" aria-label={`${clamped} / 5`}>
+    <span class="stars-bg" aria-hidden="true">★★★★★</span>
+    <span class="stars-fg" style={`width:${pct}%`} aria-hidden="true">★★★★★</span>
+  </span>
+  {showValue && <span class="value">{clamped.toFixed(1)}</span>}
+</span>
+
+<style>
+  .rating-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+</style>

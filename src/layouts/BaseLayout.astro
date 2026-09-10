@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { languages, type Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Map of language code → path for the equivalent page (for hreflang + switcher). */
+  alternates?: Partial<Record<Lang, string>>;
+}
+const { lang, title, description, alternates = {} } = Astro.props;
+const t = useTranslations(lang);
+
+const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
+const pageDescription = description ?? t('site.description');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/*
+      Language default: on the Spanish root, if the visitor hasn't chosen a
+      language and their browser isn't Spanish, send them to the English site.
+      A stored choice (set by the language switcher) always wins. Runs first so
+      it can redirect before any assets load; only ever /  →  /en/ (no loop).
+    */}
+    <script is:inline>
+      (() => {
+        if (location.pathname !== '/') return;
+        try {
+          var stored = localStorage.getItem('lang');
+          if (stored !== 'es' && stored !== 'en') {
+            var pref =
+              (navigator.languages && navigator.languages[0]) ||
+              navigator.language ||
+              '';
+            stored = pref.toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+          }
+          if (stored === 'en') location.replace('/en/');
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+    />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+
+    {
+      (Object.keys(languages) as Lang[]).map(
+        (code) =>
+          alternates[code] && (
+            <link
+              rel="alternate"
+              hreflang={code}
+              href={new URL(alternates[code]!, Astro.site)}
+            />
+          ),
+      )
+    }
+
+    {/*
+      Only stamp data-theme when the visitor has made an explicit choice.
+      With no choice, the CSS `prefers-color-scheme` rules govern, so the
+      theme defaults to the browser preference before first paint.
+    */}
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored);
+          }
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body>
+    <Header lang={lang} alternates={alternates} />
+    <main class="container">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

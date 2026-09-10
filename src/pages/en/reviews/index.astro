@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ReviewCard from '../../../components/ReviewCard.astro';
+import { getReviews } from '../../../lib/reviews';
+import { useTranslations } from '../../../i18n/utils';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const reviews = await getReviews(lang);
+const alternates = { es: '/resenas/', en: '/en/reviews/' };
+---
+
+<BaseLayout lang={lang} title={t('reviews.title')} alternates={alternates}>
+  <h1 class="page-title">{t('reviews.title')}</h1>
+  {
+    reviews.length === 0 ? (
+      <p class="empty">{t('reviews.empty')}</p>
+    ) : (
+      <div class="grid">
+        {reviews.map((review) => (
+          <ReviewCard review={review} lang={lang} />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-title {
+    padding-block: 2rem 1.5rem;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .empty {
+    color: var(--text-muted);
+  }
+</style>
