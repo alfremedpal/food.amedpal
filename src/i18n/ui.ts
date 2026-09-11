@@ -18,6 +18,7 @@ export const ui = {
     "nav.reviews": "Reseñas",
     "nav.menu": "Menú",
     "home.latest": "Últimas reseñas",
+    "home.announcements": "Últimos anuncios",
     "home.intro":
       "Un pequeño espacio donde comparto lo que como, y lo que pienso al respecto. Ubicado en Mérida, Yucatán.",
     "reviews.title": "Todas las reseñas",
@@ -26,6 +27,9 @@ export const ui = {
     "review.updated": "Editado el",
     "review.back": "← Volver a las reseñas",
     "review.rating": "Valoración",
+    "announcements.empty": "Todavía no hay anuncios.",
+    "announcement.published": "Publicado el",
+    "announcement.back": "← Volver al inicio",
     "theme.toggle": "Cambiar tema",
     "lang.switch": "Cambiar idioma",
   },
@@ -36,6 +40,7 @@ export const ui = {
     "nav.reviews": "Reviews",
     "nav.menu": "Menu",
     "home.latest": "Latest reviews",
+    "home.announcements": "Latest announcements",
     "home.intro":
       "A space where I share what I eat, and what I think about it. Based in Mérida, Yucatán.",
     "reviews.title": "All reviews",
@@ -44,6 +49,9 @@ export const ui = {
     "review.updated": "Edited on",
     "review.back": "← Back to reviews",
     "review.rating": "Rating",
+    "announcements.empty": "No announcements yet.",
+    "announcement.published": "Published on",
+    "announcement.back": "← Back to home",
     "theme.toggle": "Toggle theme",
     "lang.switch": "Switch language",
   },
@@ -51,6 +59,6 @@ export const ui = {
 
 /** Localized top-level route segment for the reviews index, per language. */
 export const routes = {
-  es: { reviews: "resenas" },
-  en: { reviews: "reviews" },
+  es: { reviews: "resenas", announcements: "anuncios" },
+  en: { reviews: "reviews", announcements: "announcements" },
 } as const;

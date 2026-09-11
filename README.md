@@ -70,6 +70,27 @@ Review body in Markdown…
 Give a review and its translation the **same `translationKey`** so the language
 switcher can jump between them. Drafts (`draft: true`) are hidden in production.
 
+## Announcements
+
+Announcements are a separate collection that uses the **same MDX format** as
+reviews (minus the review-only fields like `rating`). They live in
+`src/content/announcements/<lang>/<slug>.mdx`, always carry an `announcement`
+tag (added automatically), and appear in the "Latest announcements" section on
+the home page — right after the reviews — each linking to its own page
+(`/anuncios/…` in Spanish, `/en/announcements/…` in English).
+
+```markdown
+---
+title: The blog is live!
+description: A new corner to share what I eat.
+lang: en
+pubDate: 2026-09-10
+translationKey: hola-mundo   # optional — links the ES/EN versions
+---
+
+Announcement body in MDX…
+```
+
 ## Feeds & sitemap
 
 - **Sitemap** — `@astrojs/sitemap` generates `sitemap-index.xml` at build time,

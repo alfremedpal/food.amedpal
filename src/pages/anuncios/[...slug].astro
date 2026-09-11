@@ -1,0 +1,42 @@
+---
+import { render } from 'astro:content';
+import AnnouncementLayout from '../../layouts/AnnouncementLayout.astro';
+import { getAnnouncements, announcementSlug } from '../../lib/announcements';
+import { localizedPath, routeSegment } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+export async function getStaticPaths() {
+  const es = await getAnnouncements('es');
+  const en = await getAnnouncements('en');
+
+  return es.map((announcement) => {
+    const alternates: Partial<Record<Lang, string>> = {
+      es: localizedPath(
+        'es',
+        `${routeSegment('es', 'announcements')}/${announcementSlug(announcement)}`,
+      ),
+    };
+    const key = announcement.data.translationKey;
+    if (key) {
+      const match = en.find((e) => e.data.translationKey === key);
+      if (match) {
+        alternates.en = localizedPath(
+          'en',
+          `${routeSegment('en', 'announcements')}/${announcementSlug(match)}`,
+        );
+      }
+    }
+    return {
+      params: { slug: announcementSlug(announcement) },
+      props: { announcement, alternates },
+    };
+  });
+}
+
+const { announcement, alternates } = Astro.props;
+const { Content } = await render(announcement);
+---
+
+<AnnouncementLayout announcement={announcement} lang="es" alternates={alternates}>
+  <Content />
+</AnnouncementLayout>

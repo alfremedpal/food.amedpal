@@ -1,12 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ReviewCard from '../components/ReviewCard.astro';
+import AnnouncementList from '../components/AnnouncementList.astro';
 import { getReviews } from '../lib/reviews';
+import { getAnnouncements } from '../lib/announcements';
 import { useTranslations } from '../i18n/utils';
 
 const lang = 'es' as const;
 const t = useTranslations(lang);
 const reviews = (await getReviews(lang)).slice(0, 6);
+const announcements = (await getAnnouncements(lang)).slice(0, 4);
 const alternates = { es: '/', en: '/en/' };
 ---
 
@@ -30,6 +33,15 @@ const alternates = { es: '/', en: '/en/' };
       )
     }
   </section>
+
+  {
+    announcements.length > 0 && (
+      <section>
+        <h2>{t('home.announcements')}</h2>
+        <AnnouncementList announcements={announcements} lang={lang} />
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>

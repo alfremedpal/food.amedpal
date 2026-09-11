@@ -1,0 +1,93 @@
+---
+import type { Lang } from '../i18n/ui';
+import { formatDate, localizedPath, routeSegment } from '../i18n/utils';
+import { announcementSlug, type Announcement } from '../lib/announcements';
+
+interface Props {
+  announcements: Announcement[];
+  lang: Lang;
+}
+const { announcements, lang } = Astro.props;
+---
+
+<ul class="ann-list">
+  {
+    announcements.map((a) => {
+      const href = localizedPath(
+        lang,
+        `${routeSegment(lang, 'announcements')}/${announcementSlug(a)}`,
+      );
+      return (
+        <li class="ann">
+          <a class="ann-link" href={href}>
+            <span class="icon" aria-hidden="true">📣</span>
+            <span class="text">
+              <span class="title">{a.data.title}</span>
+              <span class="desc">{a.data.description}</span>
+            </span>
+            <time class="date" datetime={a.data.pubDate.toISOString()}>
+              {formatDate(a.data.pubDate, lang)}
+            </time>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .ann-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ann-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .ann-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .icon {
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .title {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+  .date {
+    margin-inline-start: auto;
+    flex-shrink: 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  @media (max-width: 520px) {
+    .date {
+      display: none;
+    }
+  }
+</style>

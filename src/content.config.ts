@@ -25,4 +25,32 @@ const reviews = defineCollection({
     }),
 });
 
-export const collections = { reviews };
+/**
+ * Announcements use the same MDX authoring format as reviews, minus the
+ * review-specific fields (no rating/place). They live in
+ * src/content/announcements/{lang}/{slug}.mdx and always carry an
+ * "announcement" tag (enforced below).
+ */
+const announcements = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/announcements' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      lang: z.enum(['es', 'en']),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      tags: z
+        .array(z.string())
+        .default([])
+        .transform((tags) =>
+          tags.includes('announcement') ? tags : ['announcement', ...tags],
+        ),
+      heroImage: image().optional(),
+      /** Slug of the same announcement in the other language. */
+      translationKey: z.string().optional(),
+      draft: z.boolean().default(false),
+    }),
+});
+
+export const collections = { reviews, announcements };
