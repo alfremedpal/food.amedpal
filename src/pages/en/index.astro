@@ -69,4 +69,30 @@ const alternates = { es: '/', en: '/en/' };
   .empty {
     color: var(--text-muted);
   }
+
+  /* On mobile the reviews become a swipeable, snapping carousel that
+     bleeds to the screen edges. Desktop keeps the grid above. */
+  @media (max-width: 640px) {
+    .grid {
+      display: flex;
+      grid-template-columns: none;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      /* extend past the container's 1.25rem gutter, then pad it back */
+      margin-inline: -1.25rem;
+      padding-inline: 1.25rem;
+      scroll-padding-inline: 1.25rem;
+      scrollbar-width: none;
+    }
+    .grid::-webkit-scrollbar {
+      display: none;
+    }
+    .grid > :global(.card) {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+  }
 </style>
