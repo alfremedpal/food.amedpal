@@ -118,12 +118,32 @@ img {
 
 .prose {
   max-width: var(--content-width);
+  font-size: 1.075rem; /* ~17px — comfortable reading size */
+  line-height: 1.75; /* airy; Montserrat has a tall x-height */
+  letter-spacing: normal;
+  text-wrap: pretty; /* avoids orphans / short ragged last lines */
 }
 .prose > * + * {
-  margin-top: 1.1em;
+  margin-top: 1.4em; /* clear paragraph rhythm */
+}
+.prose :is(h2, h3, h4) {
+  margin-top: 2em; /* extra breathing room above subheadings */
+  line-height: 1.3;
 }
 .prose img {
-  margin-block: 1.5em;
+  margin-block: 1.75em;
+}
+.prose blockquote {
+  margin-inline: 0;
+  padding: 0.2em 0 0.2em 1rem;
+  border-inline-start: 3px solid var(--accent);
+  color: var(--text-muted);
+}
+.prose :not(pre) > code {
+  font-size: 0.9em;
+  padding: 0.15em 0.35em;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
 }
 
 /* Buttons / controls */
