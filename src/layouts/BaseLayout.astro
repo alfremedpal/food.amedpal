@@ -18,6 +18,7 @@ const t = useTranslations(lang);
 const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
 const pageDescription = description ?? t('site.description');
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const feedHref = new URL(lang === 'es' ? '/rss.xml' : '/en/rss.xml', Astro.site);
 ---
 
 <!doctype html>
@@ -63,6 +64,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={t('site.title')}
+      href={feedHref}
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />

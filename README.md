@@ -70,6 +70,17 @@ Review body in Markdown…
 Give a review and its translation the **same `translationKey`** so the language
 switcher can jump between them. Drafts (`draft: true`) are hidden in production.
 
+## Feeds & sitemap
+
+- **Sitemap** — `@astrojs/sitemap` generates `sitemap-index.xml` at build time,
+  listing every page in both languages. `public/robots.txt` points crawlers to it.
+- **RSS** — one feed per language: Spanish at `/rss.xml`, English at
+  `/en/rss.xml` (see `src/pages/rss.xml.ts` and `src/pages/en/rss.xml.ts`). Each
+  page advertises its feed via a `<link rel="alternate">` in the head.
+
+The sitemap is only emitted by `astro build`, not the dev server; the RSS
+endpoints work in both.
+
 ## Commands
 
 | Command             | Action                                   |
