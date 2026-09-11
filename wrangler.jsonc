@@ -1,0 +1,8 @@
+{
+  // Cloudflare doesn't like dots in the name
+  "name": "food-amedpal",
+  "compatibility_date": "2025-09-11",
+  "assets": {
+    "directory": "./dist",
+  },
+}
