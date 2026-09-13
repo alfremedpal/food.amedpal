@@ -78,6 +78,9 @@ const where = [place, location].filter(Boolean).join(' · ');
           alt={title}
           width={1080}
           height={620}
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
         />
       )
     }
@@ -90,6 +93,8 @@ const where = [place, location].filter(Boolean).join(' · ');
 
 <style>
   .review {
+    max-width: var(--content-width);
+    margin-inline: auto;
     padding-block: 2rem;
   }
   .back {
@@ -101,6 +106,9 @@ const where = [place, location].filter(Boolean).join(' · ');
   }
   .back:hover {
     color: var(--accent);
+  }
+  .head {
+    max-width: var(--content-width);
   }
   .head h1 {
     margin: 0 0 0.35rem;
@@ -140,6 +148,7 @@ const where = [place, location].filter(Boolean).join(' · ');
   }
   .hero {
     width: 100%;
+    max-width: var(--content-width);
     aspect-ratio: 16 / 9;
     object-fit: cover;
     margin-block: 1.75rem;
