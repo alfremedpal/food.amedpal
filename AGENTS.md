@@ -34,23 +34,29 @@ Consult these guides before working on related tasks:
 
 ```text
 src/
-├── components/        # Header, Footer, ReviewCard, Rating, ThemeToggle, LanguagePicker
+├── components/        # Header, Footer, ReviewCard, EstablishmentCard, Rating, ThemeToggle, LanguagePicker
 ├── content/
-│   └── reviews/
-│       ├── es/        # Spanish reviews (MDX)
-│       └── en/        # English reviews (MDX)
+│   ├── reviews/
+│   │   ├── es/        # Spanish reviews (MDX)
+│   │   └── en/        # English reviews (MDX)
+│   └── establishments/
+│       ├── es/        # Spanish establishments (MDX)
+│       └── en/        # English establishments (MDX)
 ├── i18n/
 │   ├── ui.ts          # UI strings + localized route segments (es is source of truth)
 │   └── utils.ts       # t(), localizedPath(), date formatting…
-├── layouts/           # BaseLayout, ReviewLayout
-├── lib/reviews.ts     # querying reviews by language
+├── layouts/           # BaseLayout, ReviewLayout, EstablishmentLayout
+├── lib/
+│   ├── reviews.ts        # querying reviews by language
+│   └── establishments.ts # querying establishments + their dishes
 ├── pages/
 │   ├── index.astro          # ES home        →  /
 │   ├── resenas/            # ES reviews     →  /resenas/…
+│   ├── lugares/            # ES places      →  /lugares/…
 │   ├── sobre-mi.astro       # ES about       →  /sobre-mi/
 │   └── en/                  # English mirror →  /en/…
 ├── styles/global.css  # design tokens + light/dark themes
-└── content.config.ts  # reviews collection schema
+└── content.config.ts  # reviews, announcements & establishments schemas
 ```
 
 ## Languages
@@ -84,6 +90,7 @@ updatedDate: 2026-09-05  # optional — shown as "Edited on" when present
 rating: 4.5              # 0–5, halves allowed
 place: Casa Julia        # optional — restaurant / brand / stall
 location: Madrid         # optional — city or area
+establishment: en/casa-julia   # optional — lang-prefixed id of an establishment
 tags: [croquettes, tapas]
 translationKey: croquetas-casa-julia   # optional — links the ES/EN versions
 heroImage: ./croquetas.jpg             # optional — relative to the .md file
@@ -95,6 +102,54 @@ Review body in Markdown…
 
 Give a review and its translation the **same `translationKey`** so the language
 switcher can jump between them. Drafts (`draft: true`) are hidden in production.
+
+Set `establishment` when the dish belongs to a place that has its own page (see
+[Establishments](#establishments)). Its value is the **lang-prefixed id** of an
+establishment entry (`en/casa-julia`, `es/casa-julia`) and is **validated at
+build time** — a typo fails the build. Leave it unset for one-off spots; the
+free-text `place` still shows and no upward link is rendered.
+
+## Establishments
+
+Establishments are places (restaurants, brands, market stalls) reviewed **as a
+whole**, separate from the individual dishes. They're their own collection using
+the **same bilingual MDX format** as reviews, and live in
+`src/content/establishments/<lang>/<slug>.mdx`. Each one gets its own page
+(`/lugares/…` in Spanish, `/en/places/…` in English) that shows its overall
+rating and writeup, then auto-lists every dish reviewed there. A "Places"
+listing lives at `/lugares/` and `/en/places/`, linked from the header nav.
+
+```markdown
+---
+title: Casa Julia
+description: A cozy neighborhood tapas spot that rarely disappoints.
+lang: en
+pubDate: 2026-08-20
+updatedDate: 2026-09-05  # optional — shown as "Edited on" when present
+rating: 4                # 0–5, halves allowed — the place *overall*
+location: Madrid         # optional — city or area
+tags: [restaurant]
+translationKey: casa-julia   # optional — links the ES/EN versions
+heroImage: https://cdn.amedpal.com/food/…   # optional — full CDN URL
+draft: false
+---
+
+Your overall take on the place…
+```
+
+**Linking dishes to a place.** In a review's frontmatter, set
+`establishment: <lang>/<slug>` (the lang-prefixed id of the establishment, e.g.
+`en/casa-julia`). That's the only wiring needed — the dish then appears on the
+place's page automatically, and the review page links up to the place. Point a
+review at the establishment **in its own language** (an `en` review →
+`en/casa-julia`). The reference is validated at build time, so a wrong id fails
+the build rather than breaking silently.
+
+As with reviews, give an establishment and its translation the same
+`translationKey` so the switcher can jump between them, and `draft: true` hides
+it in production. A review that links to a still-draft establishment won't render
+the upward link in production until the establishment is published, to avoid a
+dead link.
 
 ## Announcements
 
