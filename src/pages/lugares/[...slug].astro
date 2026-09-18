@@ -1,0 +1,54 @@
+---
+import { render } from 'astro:content';
+import EstablishmentLayout from '../../layouts/EstablishmentLayout.astro';
+import {
+  getEstablishments,
+  getReviewsForEstablishment,
+  establishmentSlug,
+} from '../../lib/establishments';
+import { localizedPath, routeSegment } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+export async function getStaticPaths() {
+  const es = await getEstablishments('es');
+  const en = await getEstablishments('en');
+
+  return Promise.all(
+    es.map(async (establishment) => {
+      const alternates: Partial<Record<Lang, string>> = {
+        es: localizedPath(
+          'es',
+          `${routeSegment('es', 'places')}/${establishmentSlug(establishment)}`,
+        ),
+      };
+      const key = establishment.data.translationKey;
+      if (key) {
+        const match = en.find((e) => e.data.translationKey === key);
+        if (match) {
+          alternates.en = localizedPath(
+            'en',
+            `${routeSegment('en', 'places')}/${establishmentSlug(match)}`,
+          );
+        }
+      }
+      const dishes = await getReviewsForEstablishment(establishment);
+      return {
+        params: { slug: establishmentSlug(establishment) },
+        props: { establishment, dishes, alternates },
+      };
+    }),
+  );
+}
+
+const { establishment, dishes, alternates } = Astro.props;
+const { Content } = await render(establishment);
+---
+
+<EstablishmentLayout
+  establishment={establishment}
+  dishes={dishes}
+  lang="es"
+  alternates={alternates}
+>
+  <Content />
+</EstablishmentLayout>

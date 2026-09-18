@@ -1,19 +1,20 @@
 ---
 import { Image } from 'astro:assets';
-import { getEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
+import ReviewCard from '../components/ReviewCard.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, localizedPath, routeSegment } from '../i18n/utils';
+import type { Establishment } from '../lib/establishments';
 import type { Review } from '../lib/reviews';
-import { establishmentSlug } from '../lib/establishments';
 
 interface Props {
-  review: Review;
+  establishment: Establishment;
+  dishes: Review[];
   lang: Lang;
   alternates: Partial<Record<Lang, string>>;
 }
-const { review, lang, alternates } = Astro.props;
+const { establishment, dishes, lang, alternates } = Astro.props;
 const t = useTranslations(lang);
 const {
   title,
@@ -23,25 +24,9 @@ const {
   tags,
   heroImage,
   rating,
-  place,
   location,
-} = review.data;
-const reviewsHref = localizedPath(lang, routeSegment(lang, 'reviews'));
-
-// If the dish belongs to a tracked establishment, link up to its page and use
-// its name; otherwise fall back to the free-text `place`.
-const establishment = review.data.establishment
-  ? await getEntry(review.data.establishment)
-  : undefined;
-// Only link to the establishment when its page actually exists — drafts are not
-// built in production, so linking to one would 404.
-const establishmentLinkable =
-  establishment && (import.meta.env.PROD ? !establishment.data.draft : true);
-const establishmentHref = establishmentLinkable
-  ? localizedPath(lang, `${routeSegment(lang, 'places')}/${establishmentSlug(establishment)}`)
-  : undefined;
-const placeName = establishment?.data.title ?? place;
-const where = [placeName, location].filter(Boolean).join(' · ');
+} = establishment.data;
+const placesHref = localizedPath(lang, routeSegment(lang, 'places'));
 ---
 
 <BaseLayout
@@ -50,22 +35,14 @@ const where = [placeName, location].filter(Boolean).join(' · ');
   description={description}
   alternates={alternates}
 >
-  <article class="review">
-    <a class="back" href={reviewsHref}>{t('review.back')}</a>
+  <article class="place">
+    <a class="back" href={placesHref}>{t('place.back')}</a>
 
     <header class="head">
       <h1>{title}</h1>
-      {
-        establishmentHref ? (
-          <p class="where">
-            <a href={establishmentHref}>{placeName}</a>
-            {location && <span class="where-loc"> · {location}</span>}
-          </p>
-        ) : (
-          where && <p class="where">{where}</p>
-        )
-      }
+      {location && <p class="where">{location}</p>}
       <div class="score">
+        <span class="score-label">{t('place.rating')}</span>
         <Rating value={rating} />
       </div>
       <p class="lead">{description}</p>
@@ -113,11 +90,26 @@ const where = [placeName, location].filter(Boolean).join(' · ');
     <div class="prose">
       <slot />
     </div>
+
+    <section class="dishes">
+      <h2>{t('place.dishes')}</h2>
+      {
+        dishes.length === 0 ? (
+          <p class="empty">{t('place.dishes.empty')}</p>
+        ) : (
+          <div class="grid">
+            {dishes.map((review) => (
+              <ReviewCard review={review} lang={lang} />
+            ))}
+          </div>
+        )
+      }
+    </section>
   </article>
 </BaseLayout>
 
 <style>
-  .review {
+  .place {
     max-width: var(--content-width);
     margin-inline: auto;
     padding-block: 2rem;
@@ -144,19 +136,17 @@ const where = [placeName, location].filter(Boolean).join(' · ');
     font-weight: 600;
     color: var(--accent);
   }
-  .where a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .where a:hover {
-    text-decoration: underline;
-  }
-  .where-loc {
-    color: var(--text-muted);
-  }
   .score {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-size: 1.3rem;
     margin-bottom: 1rem;
+  }
+  .score-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
   }
   .lead {
     margin: 0 0 1rem;
@@ -187,5 +177,22 @@ const where = [placeName, location].filter(Boolean).join(' · ');
     aspect-ratio: 16 / 9;
     object-fit: cover;
     margin-block: 1.75rem;
+  }
+  .dishes {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .dishes h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.6rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .empty {
+    color: var(--text-muted);
   }
 </style>

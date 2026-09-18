@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EstablishmentCard from '../../../components/EstablishmentCard.astro';
+import {
+  getEstablishments,
+  getReviewsForEstablishment,
+} from '../../../lib/establishments';
+import { useTranslations } from '../../../i18n/utils';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const establishments = await getEstablishments(lang);
+const counts = await Promise.all(
+  establishments.map(async (e) => (await getReviewsForEstablishment(e)).length),
+);
+const alternates = { es: '/lugares/', en: '/en/places/' };
+---
+
+<BaseLayout lang={lang} title={t('places.title')} alternates={alternates}>
+  <h1 class="page-title">{t('places.title')}</h1>
+  {
+    establishments.length === 0 ? (
+      <p class="empty">{t('places.empty')}</p>
+    ) : (
+      <div class="grid">
+        {establishments.map((establishment, i) => (
+          <EstablishmentCard
+            establishment={establishment}
+            lang={lang}
+            dishCount={counts[i]}
+          />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-title {
+    padding-block: 2rem 1.5rem;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .empty {
+    color: var(--text-muted);
+  }
+</style>

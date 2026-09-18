@@ -20,6 +20,10 @@ const nav = [
     href: localizedPath(lang, routeSegment(lang, 'reviews')),
     label: t('nav.reviews'),
   },
+  {
+    href: localizedPath(lang, routeSegment(lang, 'places')),
+    label: t('nav.places'),
+  },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';

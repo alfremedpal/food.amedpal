@@ -1,0 +1,35 @@
+---
+title: Tavola Pizza
+description: Cremosa y muy aromática, una nueva favorita.
+lang: es
+pubDate: 2026-09-13
+rating: 4.5
+place: Tavola
+location: Mérida
+establishment: es/tavola
+tags: [pizza, italiano]
+translationKey: pizza-tavola
+heroImage: https://cdn.amedpal.com/food/pizza-tavola-1.avif
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+Últimamente he estado visitando <a href="/es/places/tavola" target="_blank" rel="noopener noreferrer">Tavola</a> con más frecuencia, y se debe principalmente a esta pizza.
+
+> Pizza blanca con pasta de ajo, base de ricotta cremosa y espinacas, queso mozzarella añejo y aceite de trufa blanca.
+
+Me encantan el ajo y la trufa, y esta pizza tiene la cantidad justa de ambos (mucha) en perfecta armonía. Al combinarse con esa pasta _muy_ cremosa, el queso ligeramente dorado y la masa suave y elástica, la pizza prácticamente se derrite en la boca. Las 8 rebanadas son delgadas, pero mantienen su forma al sostenerlas. La orilla lleva queso parmesano rallado por encima, lo cual es un buen detalle. Sin embargo, lo que más destaca, en mi opinión, es su aroma hipnotizante.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/pizza-tavola.avif",
+    "https://cdn.amedpal.com/food/pizza-tavola-3.avif",
+    "https://cdn.amedpal.com/food/pizza-tavola-4.avif",
+  ]}
+  alt="Pizza Tavola en Tavola"
+/>
+
+Cada vez que vuelvo a Tavola, quiero pedirla de nuevo. Definitivamente vale la pena los $345 MXN.
+
+<RatingBlock value={frontmatter.rating} />
