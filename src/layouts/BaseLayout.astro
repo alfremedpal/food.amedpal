@@ -11,8 +11,10 @@ interface Props {
   description?: string;
   /** Map of language code → path for the equivalent page (for hreflang + switcher). */
   alternates?: Partial<Record<Lang, string>>;
+  /** JSON-LD document to emit in the head (Schema.org structured data). */
+  schema?: object;
 }
-const { lang, title, description, alternates = {} } = Astro.props;
+const { lang, title, description, alternates = {}, schema } = Astro.props;
 const t = useTranslations(lang);
 
 const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
@@ -76,6 +78,16 @@ const feedHref = new URL(lang === 'es' ? '/rss.xml' : '/en/rss.xml', Astro.site)
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+
+    {
+      schema && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      )
+    }
 
     {
       (Object.keys(languages) as Lang[]).map(

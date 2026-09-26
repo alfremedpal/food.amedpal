@@ -3,10 +3,17 @@ import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
 import ReviewCard from '../components/ReviewCard.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, localizedPath, routeSegment } from '../i18n/utils';
 import type { Establishment } from '../lib/establishments';
 import type { Review } from '../lib/reviews';
+import {
+  breadcrumbSchema,
+  jsonLdGraph,
+  restaurantSchema,
+  type Crumb,
+} from '../lib/schema';
 
 interface Props {
   establishment: Establishment;
@@ -27,6 +34,26 @@ const {
   location,
 } = establishment.data;
 const placesHref = localizedPath(lang, routeSegment(lang, 'places'));
+
+const crumbs: Crumb[] = [
+  { name: t('breadcrumb.home'), path: localizedPath(lang) },
+  { name: t('nav.places'), path: placesHref },
+  { name: title, path: Astro.url.pathname },
+];
+
+const schema = jsonLdGraph([
+  restaurantSchema({
+    title,
+    description,
+    pubDate,
+    updatedDate,
+    rating,
+    location,
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    image: heroImage,
+  }),
+  breadcrumbSchema(Astro.site, crumbs),
+]);
 ---
 
 <BaseLayout
@@ -34,9 +61,10 @@ const placesHref = localizedPath(lang, routeSegment(lang, 'places'));
   title={title}
   description={description}
   alternates={alternates}
+  schema={schema}
 >
   <article class="place">
-    <a class="back" href={placesHref}>{t('place.back')}</a>
+    <Breadcrumbs crumbs={crumbs} label={t('breadcrumb.label')} />
 
     <header class="head">
       <h1>{title}</h1>
@@ -112,17 +140,7 @@ const placesHref = localizedPath(lang, routeSegment(lang, 'places'));
   .place {
     max-width: var(--content-width);
     margin-inline: auto;
-    padding-block: 2rem;
-  }
-  .back {
-    display: inline-block;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: var(--text-muted);
-  }
-  .back:hover {
-    color: var(--accent);
+    padding-block: 0.5rem 2rem;
   }
   .head {
     max-width: var(--content-width);

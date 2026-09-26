@@ -10,6 +10,7 @@ import {
 } from '../../lib/establishments';
 import { getAnnouncements } from '../../lib/announcements';
 import { useTranslations } from '../../i18n/utils';
+import { jsonLdGraph, siteIdentitySchema } from '../../lib/schema';
 
 const lang = 'en' as const;
 const t = useTranslations(lang);
@@ -20,9 +21,18 @@ const dishCounts = await Promise.all(
 );
 const announcements = (await getAnnouncements(lang)).slice(0, 4);
 const alternates = { es: '/', en: '/en/' };
+
+const schema = jsonLdGraph(
+  siteIdentitySchema({
+    name: t('site.title'),
+    description: t('site.description'),
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    lang,
+  }),
+);
 ---
 
-<BaseLayout lang={lang} alternates={alternates}>
+<BaseLayout lang={lang} alternates={alternates} schema={schema}>
   <section class="hero">
     <h1>{t('site.title')}</h1>
     <p class="intro">{t('home.intro')}</p>

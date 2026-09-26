@@ -1,0 +1,73 @@
+---
+import type { Crumb } from '../lib/schema';
+
+interface Props {
+  /** Full trail, root first, current page last. The last item isn't linked. */
+  crumbs: Crumb[];
+  label?: string;
+}
+const { crumbs, label = 'Breadcrumb' } = Astro.props;
+---
+
+<nav class="crumbs" aria-label={label}>
+  <ol>
+    {
+      crumbs.map((crumb, i) => {
+        const isCurrent = i === crumbs.length - 1;
+        return (
+          <li>
+            {isCurrent ? (
+              <span aria-current="page">{crumb.name}</span>
+            ) : (
+              <a href={crumb.path}>{crumb.name}</a>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs {
+    margin-block: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .crumbs li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    min-width: 0;
+  }
+  /* Separator between items. */
+  .crumbs li + li::before {
+    content: '/';
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  .crumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .crumbs a:hover {
+    color: var(--accent);
+  }
+  .crumbs [aria-current='page'] {
+    color: var(--text);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60vw;
+  }
+</style>

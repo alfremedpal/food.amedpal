@@ -3,10 +3,18 @@ import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, localizedPath, routeSegment } from '../i18n/utils';
 import type { Review } from '../lib/reviews';
 import { establishmentSlug } from '../lib/establishments';
+import {
+  absUrl,
+  breadcrumbSchema,
+  jsonLdGraph,
+  reviewSchema,
+  type Crumb,
+} from '../lib/schema';
 
 interface Props {
   review: Review;
@@ -42,6 +50,37 @@ const establishmentHref = establishmentLinkable
   : undefined;
 const placeName = establishment?.data.title ?? place;
 const where = [placeName, location].filter(Boolean).join(' · ');
+
+// Breadcrumbs mirror the topical hierarchy, not the flat URL: when the dish
+// belongs to a tracked place, the trail runs Home → Places → <place> → <dish>;
+// otherwise it falls back to Home → Reviews → <dish>.
+const crumbs: Crumb[] = establishmentHref
+  ? [
+      { name: t('breadcrumb.home'), path: localizedPath(lang) },
+      { name: t('nav.places'), path: localizedPath(lang, routeSegment(lang, 'places')) },
+      { name: placeName!, path: establishmentHref },
+      { name: title, path: Astro.url.pathname },
+    ]
+  : [
+      { name: t('breadcrumb.home'), path: localizedPath(lang) },
+      { name: t('nav.reviews'), path: reviewsHref },
+      { name: title, path: Astro.url.pathname },
+    ];
+
+const schema = jsonLdGraph([
+  reviewSchema({
+    title,
+    description,
+    pubDate,
+    updatedDate,
+    rating,
+    placeName,
+    location,
+    placeUrl: establishmentHref ? absUrl(Astro.site, establishmentHref) : undefined,
+    image: heroImage,
+  }),
+  breadcrumbSchema(Astro.site, crumbs),
+]);
 ---
 
 <BaseLayout
@@ -49,9 +88,10 @@ const where = [placeName, location].filter(Boolean).join(' · ');
   title={title}
   description={description}
   alternates={alternates}
+  schema={schema}
 >
   <article class="review">
-    <a class="back" href={reviewsHref}>{t('review.back')}</a>
+    <Breadcrumbs crumbs={crumbs} label={t('breadcrumb.label')} />
 
     <header class="head">
       <h1>{title}</h1>
@@ -120,17 +160,7 @@ const where = [placeName, location].filter(Boolean).join(' · ');
   .review {
     max-width: var(--content-width);
     margin-inline: auto;
-    padding-block: 2rem;
-  }
-  .back {
-    display: inline-block;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: var(--text-muted);
-  }
-  .back:hover {
-    color: var(--accent);
+    padding-block: 0.5rem 2rem;
   }
   .head {
     max-width: var(--content-width);
