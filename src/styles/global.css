@@ -145,6 +145,13 @@ img {
   border-radius: 5px;
   background: color-mix(in srgb, var(--text) 8%, transparent);
 }
+.prose strong {
+  color: var(--accent);
+}
+.prose em {
+  color: var(--accent);
+  font-weight: 300; /* lighter than body for a delicate italic */
+}
 
 /* Buttons / controls */
 .icon-button {
