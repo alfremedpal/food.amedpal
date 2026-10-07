@@ -1,0 +1,33 @@
+---
+// Fallback shown in place of a hero image: the establishment/dish name set
+// on the accent-tinted background used elsewhere for image placeholders.
+interface Props {
+  title: string;
+  class?: string;
+}
+const { title, class: className } = Astro.props;
+---
+
+<div class:list={['placeholder', className]} aria-hidden="true">
+  <span class="name">{title}</span>
+</div>
+
+<style>
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    text-align: center;
+    background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
+  }
+  .name {
+    font-weight: 700;
+    font-size: clamp(1.1rem, 3.5vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: color-mix(in srgb, var(--accent) 70%, var(--text));
+  }
+</style>

@@ -4,6 +4,7 @@ import type { Lang } from '../i18n/ui';
 import { localizedPath, routeSegment } from '../i18n/utils';
 import { establishmentSlug, type Establishment } from '../lib/establishments';
 import Rating from './Rating.astro';
+import HeroPlaceholder from './HeroPlaceholder.astro';
 
 interface Props {
   establishment: Establishment;
@@ -26,7 +27,7 @@ const { title, description, tags, heroImage, rating, location } =
       heroImage ? (
         <Image src={heroImage} alt={title} width={640} height={400} />
       ) : (
-        <div class="placeholder" aria-hidden="true">📍</div>
+        <HeroPlaceholder title={title} />
       )
     }
     <span class="badge"><Rating value={rating} /></span>
@@ -80,14 +81,6 @@ const { title, description, tags, heroImage, rating, location } =
     object-fit: cover;
     border-radius: 0;
     display: block;
-  }
-  .placeholder {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    font-size: 3rem;
-    background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
   }
   .badge {
     position: absolute;

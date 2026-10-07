@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import HeroPlaceholder from '../components/HeroPlaceholder.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, localizedPath, routeSegment } from '../i18n/utils';
 import type { Establishment } from '../lib/establishments';
@@ -101,7 +102,7 @@ const schema = jsonLdGraph([
     </header>
 
     {
-      heroImage && (
+      heroImage ? (
         <Image
           class="hero"
           src={heroImage}
@@ -112,6 +113,10 @@ const schema = jsonLdGraph([
           decoding="sync"
           fetchpriority="high"
         />
+      ) : (
+        <div class="hero">
+          <HeroPlaceholder title={title} />
+        </div>
       )
     }
 
@@ -195,6 +200,8 @@ const schema = jsonLdGraph([
     aspect-ratio: 16 / 9;
     object-fit: cover;
     margin-block: 1.75rem;
+    border-radius: var(--radius);
+    overflow: hidden;
   }
   .dishes {
     margin-top: 2.5rem;
