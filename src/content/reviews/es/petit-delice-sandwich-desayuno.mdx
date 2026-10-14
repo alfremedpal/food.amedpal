@@ -1,0 +1,35 @@
+---
+title: Sándwich de desayuno
+description: Calientito y equilibrado, le falta un poco de tostado
+lang: es
+pubDate: 2026-10-07
+rating: 4
+place: Petit Délice
+location: Mérida
+establishment: es/petit-delice
+tags: [sandwich, desayuno]
+translationKey: petit-delice-breakfast-sandwich
+heroImage: https://cdn.amedpal.com/food/petit-delic2-breakfast-sandwich-1.avif
+draft: false
+---
+
+import Carousel from '../../../components/Carousel.astro';
+import RatingBlock from '../../../components/RatingBlock.astro';
+
+> Aguacate, huevo revuelto, tocino, queso suizo y mayonesa de chipotle.
+
+Un sándwich rico y calientito para empezar el día. El aguacate está cremoso, el tocino está bueno (aunque lo preferiría un poco más crujiente) y la cantidad de mayonesa está equilibrada con el huevo revuelto, tierno y con mucho queso. Todo combina muy bien, pero hay que disfrutarlo caliente.
+
+Mi única "queja" sería el pan, que está bueno, pero creo que sería aún mejor si estuviera apenas un poco más tostado para darle más estructura al sándwich. Tal como está, me resulta demasiado suave y chicloso.
+
+<Carousel
+  images={[
+    'https://cdn.amedpal.com/food/petit-delic2-breakfast-sandwich-2.avif',
+    'https://cdn.amedpal.com/food/petit-delice-breakfast-sandwich-3.avif',
+  ]}
+  alt="Sándwich de desayuno de Petit Délice"
+/>
+
+También viene con una salsa roja muy buena y un poco picante, y unos jalapeños por si quieres un toque extra de picor (yo siempre quiero), porque la mayonesa de "chipotle" sabe a una mayonesa normal.
+
+<RatingBlock value={frontmatter.rating} />

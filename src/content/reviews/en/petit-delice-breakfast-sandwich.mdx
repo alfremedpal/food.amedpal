@@ -1,0 +1,35 @@
+---
+title: Breakfast sandwich
+description: Warm and balanced, could be more toast
+lang: en
+pubDate: 2026-09-26
+rating: 4
+place: Petit Délice
+location: Mérida
+establishment: en/petit-delice
+tags: [sandwich, breakfast]
+translationKey: petit-delice-breakfast-sandwich
+heroImage: https://cdn.amedpal.com/food/petit-delic2-breakfast-sandwich-1.avif
+draft: false
+---
+
+import Carousel from '../../../components/Carousel.astro';
+import RatingBlock from '../../../components/RatingBlock.astro';
+
+> Avocado, scrambled eggs, bacon, swiss cheese, and chipotle mayo.
+
+A nice, warm sandwich to start the day. The avocado is creamy, the bacon is good (although I'd prefer it a bit more on the crunchier side), and the amount of mayo is balanced with the cheesy, tender scrambled eggs. They all work nicely, but you gotta enjoy this warm.
+
+My only "complaint" would be the bread, which is good, but I think it would be even better if it was just a tad more toasted to give the sandwich more structure. As of now, it is too soft and chewy for me.
+
+<Carousel
+  images={[
+    'https://cdn.amedpal.com/food/petit-delic2-breakfast-sandwich-2.avif',
+    'https://cdn.amedpal.com/food/petit-delice-breakfast-sandwich-3.avif'
+  ]}
+  alt="Breakfast sandwich at Petit Délice"
+/>
+
+It also comes with a really good, slightly spicy red salsa, and some jalapeños if you want some extra kick (I always do), because the "chipotle" mayo feels like a regular one.
+
+<RatingBlock value={frontmatter.rating} />
