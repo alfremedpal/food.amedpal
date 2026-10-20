@@ -18,9 +18,15 @@ export async function getEstablishments(lang: Lang): Promise<Establishment[]> {
       id.startsWith(`${lang}/`) &&
       (import.meta.env.PROD ? !data.draft : true),
   );
-  return items.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+  return items.sort((a, b) => {
+    const byDate = b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+    if (byDate !== 0) return byDate;
+    // Language-independent tiebreaker so places with the same pubDate order
+    // identically across languages (translationKey is shared; slug as fallback).
+    const ka = a.data.translationKey ?? establishmentSlug(a);
+    const kb = b.data.translationKey ?? establishmentSlug(b);
+    return ka.localeCompare(kb);
+  });
 }
 
 /**
