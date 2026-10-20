@@ -33,6 +33,17 @@ export function routeSegment(
   return routes[lang][key];
 }
 
+/** Format a price (amount + 3-letter ISO currency) for the given language. */
+export function formatPrice(
+  price: { amount: number; currency: string },
+  lang: Lang,
+): string {
+  return new Intl.NumberFormat(lang === "es" ? "es-MX" : "en-US", {
+    style: "currency",
+    currency: price.currency,
+  }).format(price.amount);
+}
+
 /** Format a date for display in the given language. */
 export function formatDate(date: Date, lang: Lang): string {
   return new Intl.DateTimeFormat(lang === "es" ? "es-ES" : "en-US", {

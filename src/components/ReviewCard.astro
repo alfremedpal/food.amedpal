@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { Lang } from '../i18n/ui';
-import { formatDate, localizedPath, routeSegment } from '../i18n/utils';
+import { formatDate, formatPrice, localizedPath, routeSegment } from '../i18n/utils';
 import { reviewSlug, type Review } from '../lib/reviews';
 import Rating from './Rating.astro';
 
@@ -14,9 +14,10 @@ const href = localizedPath(
   lang,
   `${routeSegment(lang, 'reviews')}/${reviewSlug(review)}`,
 );
-const { title, description, pubDate, tags, heroImage, rating, place, location } =
+const { title, description, pubDate, tags, heroImage, rating, place, location, price } =
   review.data;
 const where = [place, location].filter(Boolean).join(' · ');
+const priceLabel = price ? formatPrice(price, lang) : undefined;
 ---
 
 <article class="card">
@@ -29,6 +30,7 @@ const where = [place, location].filter(Boolean).join(' · ');
       )
     }
     <span class="badge"><Rating value={rating} /></span>
+    {priceLabel && <span class="price-badge">{priceLabel}</span>}
   </a>
   <div class="body">
     <h3><a href={href}>{title}</a></h3>
@@ -84,15 +86,28 @@ const where = [place, location].filter(Boolean).join(' · ');
     font-size: 3rem;
     background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
   }
-  .badge {
+  .badge,
+  .price-badge {
     position: absolute;
-    left: 0.6rem;
     bottom: 0.6rem;
-    padding: 0.3rem 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    height: 1.9rem;
+    padding: 0 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1;
     border-radius: 999px;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(4px);
     border: 1px solid var(--border);
+  }
+  .badge {
+    left: 0.6rem;
+  }
+  .price-badge {
+    right: 0.6rem;
+    font-weight: 700;
+    color: var(--accent);
   }
   .body {
     padding: 1rem 1.1rem 1.2rem;

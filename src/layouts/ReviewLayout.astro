@@ -5,7 +5,7 @@ import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import type { Lang } from '../i18n/ui';
-import { useTranslations, formatDate, localizedPath, routeSegment } from '../i18n/utils';
+import { useTranslations, formatDate, formatPrice, localizedPath, routeSegment } from '../i18n/utils';
 import type { Review } from '../lib/reviews';
 import { establishmentSlug } from '../lib/establishments';
 import {
@@ -33,7 +33,9 @@ const {
   rating,
   place,
   location,
+  price,
 } = review.data;
+const priceLabel = price ? formatPrice(price, lang) : undefined;
 const reviewsHref = localizedPath(lang, routeSegment(lang, 'reviews'));
 
 // If the dish belongs to a tracked establishment, link up to its page and use
@@ -107,6 +109,7 @@ const schema = jsonLdGraph([
       }
       <div class="score">
         <Rating value={rating} />
+        {priceLabel && <span class="price">{priceLabel}</span>}
       </div>
       <p class="lead">{description}</p>
       <div class="meta">
@@ -185,8 +188,20 @@ const schema = jsonLdGraph([
     color: var(--text-muted);
   }
   .score {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     font-size: 1.3rem;
     margin-bottom: 1rem;
+  }
+  .price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
   }
   .lead {
     margin: 0 0 1rem;

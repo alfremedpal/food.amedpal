@@ -18,6 +18,20 @@ const reviews = defineCollection({
     /** City or area. */
     location: z.string().optional(),
     /**
+     * Optional price for the dish. Amount and (3-letter ISO) currency are
+     * required together; omit the whole field for dishes without a listed
+     * price. Shown in the cards and on the review page when present.
+     */
+    price: z
+      .object({
+        amount: z.number().nonnegative(),
+        currency: z
+          .string()
+          .length(3)
+          .transform((c) => c.toUpperCase()),
+      })
+      .optional(),
+    /**
      * The establishment this dish belongs to, as the lang-prefixed id of an
      * entry in the establishments collection. When set,
      * the review links up to the establishment page and the establishment lists
