@@ -1,0 +1,38 @@
+---
+title: Opción vegana
+description: Un plato vegano sorprendentemente bueno, al que el falafel le baja un poco el nivel
+lang: es
+pubDate: 2026-10-05
+rating: 4
+place: Pastarazzi
+location: Lucerna
+establishment: es/pastarazzi
+price:
+  amount: 28
+  currency: CHF
+tags: [vegano, falafel]
+translationKey: pastarazzi-vegans-choice
+heroImage: https://cdn.amedpal.com/food/pastarazzi-vegans-choice-1.avif
+---
+
+import RatingBlock from '../../../components/RatingBlock.astro';
+import Carousel from '../../../components/Carousel.astro';
+
+> Falafel, dos tipos de betabel, cebada perlada con sabor a limón, higos
+
+No suelo pedir opciones veganas (ni siquiera vegetarianas, la verdad), pero le pedí a nuestro mesero una recomendación, su platillo favorito del menú. Esta fue su sugerencia, y me sorprendió lo buena que estaba.
+
+La salsa de betabel estaba buena; tenía un tono picante *muy* ligero justo al final que me gustó y que se equilibraba bien con la salsa blanca de cebada, que no sabía mucho a limón pero aun así se sentía fresca y ligera. Ambas muy cremosas.
+
+<Carousel
+  images={[
+    'https://cdn.amedpal.com/food/pastarazzi-vegans-choice-2.avif',
+  ]}
+  alt="Opción vegana de Pastarazzi"
+/>
+
+El falafel estaba bueno al principio, pero cansaba rápido ya que era bastante arenoso y un poco seco. Es obvio que está pensado para comerse con las dos salsas, pero la proporción no estaba bien lograda: menos falafel habría sido lo ideal, porque más salsa probablemente habría arruinado el emplatado y lo habría hecho parecer más una sopa.
+
+La hoja deshidratada le daba un bonito toque de verde al plato, y los trozos beige amarillentos de arriba también le daban buena vista. No estoy seguro de qué eran, ¿quizá el segundo tipo de betabel? En cualquier caso, también estaban buenos.
+
+<RatingBlock value={frontmatter.rating} />
