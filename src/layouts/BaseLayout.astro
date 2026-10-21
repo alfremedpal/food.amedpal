@@ -21,6 +21,11 @@ const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
 const pageDescription = description ?? t('site.description');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const feedHref = new URL(lang === 'es' ? '/rss.xml' : '/en/rss.xml', Astro.site);
+
+// Google Analytics (GA4): loaded only in the production build, so local
+// `pnpm dev` traffic is never counted. The measurement ID is public (it ships
+// in the page HTML), so it lives here rather than in an env var.
+const gaId = import.meta.env.PROD ? 'G-845XVYTHK8' : undefined;
 ---
 
 <!doctype html>
@@ -117,6 +122,26 @@ const feedHref = new URL(lang === 'es' ? '/rss.xml' : '/en/rss.xml', Astro.site)
         } catch {}
       })();
     </script>
+
+    {
+      gaId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+          <script is:inline define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId);
+          </script>
+        </>
+      )
+    }
   </head>
   <body>
     <Header lang={lang} alternates={alternates} />
