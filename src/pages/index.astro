@@ -9,7 +9,7 @@ import {
   getReviewsForEstablishment,
 } from '../lib/establishments';
 import { getAnnouncements } from '../lib/announcements';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, localizedPath, routeSegment } from '../i18n/utils';
 import { jsonLdGraph, siteIdentitySchema } from '../lib/schema';
 
 const lang = 'es' as const;
@@ -46,11 +46,18 @@ const schema = jsonLdGraph(
       reviews.length === 0 ? (
         <p class="empty">{t('reviews.empty')}</p>
       ) : (
-        <div class="grid">
-          {reviews.map((review) => (
-            <ReviewCard review={review} lang={lang} />
-          ))}
-        </div>
+        <>
+          <div class="grid">
+            {reviews.map((review) => (
+              <ReviewCard review={review} lang={lang} />
+            ))}
+          </div>
+          <p class="more">
+            <a href={localizedPath(lang, routeSegment(lang, 'reviews'))}>
+              {t('home.moreDishes')}
+            </a>
+          </p>
+        </>
       )
     }
 
@@ -59,15 +66,22 @@ const schema = jsonLdGraph(
       establishments.length === 0 ? (
         <p class="empty">{t('places.empty')}</p>
       ) : (
-        <div class="grid">
-          {establishments.map((establishment, i) => (
-            <EstablishmentCard
-              establishment={establishment}
-              lang={lang}
-              dishCount={dishCounts[i]}
-            />
-          ))}
-        </div>
+        <>
+          <div class="grid">
+            {establishments.map((establishment, i) => (
+              <EstablishmentCard
+                establishment={establishment}
+                lang={lang}
+                dishCount={dishCounts[i]}
+              />
+            ))}
+          </div>
+          <p class="more">
+            <a href={localizedPath(lang, routeSegment(lang, 'places'))}>
+              {t('home.morePlaces')}
+            </a>
+          </p>
+        </>
       )
     }
   </section>
@@ -97,12 +111,22 @@ const schema = jsonLdGraph(
   }
   h2 {
     margin: 2rem 0 1.25rem;
-    font-size: 1.6rem;
+    font-size: clamp(1.4rem, 6vw, 1.9rem);
   }
   .subhead {
     margin: 2rem 0 1rem;
-    font-size: 1.15rem;
+    font-size: 1.4rem;
     color: var(--text-muted);
+  }
+  .more {
+    margin-top: 1.5rem;
+  }
+  .more a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .more a:hover {
+    text-decoration: underline;
   }
   .grid {
     display: grid;

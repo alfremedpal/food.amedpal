@@ -94,6 +94,18 @@ h4 {
   color: var(--text);
 }
 
+h2 {
+  font-size: 1.9rem;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.2em;
+}
+
+h3 {
+  font-size: 1.45rem;
+}
+
 a {
   color: var(--accent);
   text-decoration-thickness: 1px;
@@ -129,10 +141,6 @@ img {
 .prose :is(h2, h3, h4) {
   margin-top: 2em; /* extra breathing room above subheadings */
   line-height: 1.3;
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 3px;
-  text-underline-offset: 0.2em;
 }
 .prose img {
   margin-block: 1.75em;

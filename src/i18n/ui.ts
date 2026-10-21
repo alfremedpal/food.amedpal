@@ -23,6 +23,8 @@ export const ui = {
     "home.latest": "Últimas reseñas",
     "home.dishes": "Platillos",
     "home.places": "Lugares",
+    "home.moreDishes": "Ver más platillos →",
+    "home.morePlaces": "Ver más lugares →",
     "home.announcements": "Últimos anuncios",
     "home.intro":
       "Un pequeño espacio donde comparto lo que como, y lo que pienso al respecto. Ubicado en Mérida, Yucatán.",
@@ -57,6 +59,8 @@ export const ui = {
     "home.latest": "Latest reviews",
     "home.dishes": "Dishes",
     "home.places": "Places",
+    "home.moreDishes": "More dishes →",
+    "home.morePlaces": "More places →",
     "home.announcements": "Latest announcements",
     "home.intro":
       "A space where I share what I eat, and what I think about it. Based in Mérida, Yucatán.",
