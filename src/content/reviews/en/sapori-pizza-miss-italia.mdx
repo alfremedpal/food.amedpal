@@ -1,0 +1,35 @@
+---
+title: Pizza Miss Italia
+description: A white pizza whose first truffle-soaked bite is unforgettable, creamy and light the rest of the way.
+lang: en
+pubDate: 2026-10-09
+rating: 4
+place: Sapori
+location: Interlaken
+price:
+  amount: 34
+  currency: CHF
+establishment: en/sapori
+tags: [pizza, truffle]
+translationKey: sapori-pizza-miss-italia
+heroImage: https://cdn.amedpal.com/food/sapori-miss-italia.avif
+draft: false
+---
+
+import RatingBlock from '../../../components/RatingBlock.astro';
+import Carousel from '../../../components/Carousel.astro';
+
+> Mozzarella di bufala, cherry tomatoes, prosciutto di Parma, Grana Padano, arugula, truffle oil
+
+After a long day of hiking, that first bite into the pizza was almost orgasmic. The truffle flooded my mouth in the most amazing way; I still remember that feeling. By the second bite the truffle quickly loses its presence as you get used to it, but it is still very good. It is just that that first bite was incredible.
+
+<Carousel
+  images={[
+    'https://cdn.amedpal.com/food/sapori-miss-italia-2.avif',
+  ]}
+  alt="Pizza Miss Italia at Sapori"
+/>
+
+The fact that this is a white pizza makes it feel very creamy and somewhat light. The dough is good, but I thought the base could have used a bit more structure.
+
+<RatingBlock value={frontmatter.rating} />
