@@ -1,0 +1,35 @@
+---
+title: Café Glacé
+description: Helado de vainilla y espresso, buenísimo.
+lang: es
+pubDate: 2026-10-10
+rating: 4.5
+place: Fuchs
+location: Zermatt
+price:
+  amount: 16
+  currency: CHF
+establishment: es/fuchs
+tags: [cafe, helado]
+translationKey: fuchs-cafe-glace
+heroImage: https://cdn.amedpal.com/food/fuchs-cafe-glace-1.avif
+draft: false
+---
+
+import RatingBlock from '../../../components/RatingBlock.astro';
+import Carousel from '../../../components/Carousel.astro';
+
+> Helado de vainilla mezclado a mano y espresso, crema batida
+
+¿Cuál es la diferencia entre esto y un affogato, además de que en el affogato el café se queda caliente? No sé, pero hasta en un frío día de octubre, esta bebida estuvo increíble.
+
+El café no estaba muy amargo, y el helado de vainilla no estaba muy dulce, así que al mezclarse el resultado fue algo maravilloso. Montones de crema batida, tres galletitas, y unos chocolates chiquitos con forma de grano de café le daban una buena presentación y ayudaban a aportar variedad y textura a la bebida. Tuve que controlarme para no tomármela toda en dos minutos.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/fuchs-cafe-glace-2.avif"]}
+  alt="Café Glacé at Fuchs"
+/>
+
+Eso sí, me pareció que estaba *ligeramente* caro.
+
+<RatingBlock value={frontmatter.rating} />

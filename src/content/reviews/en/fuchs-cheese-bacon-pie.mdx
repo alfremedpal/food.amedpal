@@ -1,0 +1,29 @@
+---
+title: Cheese-Bacon Pie
+description: A creamy, cheesy quiche by another name; just short on bacon.
+lang: en
+pubDate: 2026-10-10
+rating: 4
+place: Fuchs
+location: Zermatt
+price:
+  amount: 13.5
+  currency: CHF
+establishment: en/fuchs
+tags: [quiche, cheese]
+translationKey: fuchs-cheese-bacon-pie
+heroImage: https://cdn.amedpal.com/food/fuchs-cheese-bacon-pie-1.avif
+draft: false
+---
+
+import RatingBlock from "../../../components/RatingBlock.astro";
+import Carousel from "../../../components/Carousel.astro";
+
+I think this was technically a quiche? Weird that they just called it a pie, but it was good! Creamy, cheesy, good texture; my only complaint would be that there isn't enough bacon. On the rare chance that you do catch a piece of bacon in your bite, you'll enjoy it even more.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/fuchs-cheese-bacon-pie-2.avif"]}
+  alt="Cheese-bacon pie at Fuchs"
+/>
+
+<RatingBlock value={frontmatter.rating} />

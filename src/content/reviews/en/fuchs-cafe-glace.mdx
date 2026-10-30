@@ -1,0 +1,35 @@
+---
+title: Café Glacé
+description: Vanilla ice cream and espresso, like a cold affogato. Amazing.
+lang: en
+pubDate: 2026-10-10
+rating: 4.5
+place: Fuchs
+location: Zermatt
+price:
+  amount: 16
+  currency: CHF
+establishment: en/fuchs
+tags: [coffee, ice cream]
+translationKey: fuchs-cafe-glace
+heroImage: https://cdn.amedpal.com/food/fuchs-cafe-glace-1.avif
+draft: false
+---
+
+import RatingBlock from "../../../components/RatingBlock.astro";
+import Carousel from "../../../components/Carousel.astro";
+
+> Hand-mixed vanilla ice cream and espresso, whipped cream
+
+What's the difference between this and an affogato, other than the affogato keeping its coffee hot? I don't know, but even on a chilly October day, this cold drink was amazing.
+
+The coffee was not very bitter, and the vanilla ice cream was not too sweet, so when mixed together the result was something incredible. Tons of whipped cream, three small cookies, and some cute little coffee-bean-shaped chocolates added to a nice presentation and helped bring variety and texture to the drink. I had to hold myself back so I wouldn't drink it all in two minutes.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/fuchs-cafe-glace-2.avif"]}
+  alt="Café Glacé at Fuchs"
+/>
+
+I do think it was _slightly_ overpriced, though.
+
+<RatingBlock value={frontmatter.rating} />
