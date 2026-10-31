@@ -1,0 +1,36 @@
+---
+title: Matterhorn 4478
+description: A clever Matterhorn-shaped dessert that tastes as good as it looks.
+lang: en
+pubDate: 2026-10-10T12:01:00Z
+rating: 5
+place: Schweizerhof Kitchen
+location: Zermatt
+price:
+  amount: 18
+  currency: CHF
+establishment: en/schweizerhof-kitchen
+tags: [dessert, chocolate]
+translationKey: schweizerhof-matterhorn-4478
+heroImage: https://cdn.amedpal.com/food/schweizerhof-matterhorn-1.avif
+draft: false
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Matterhorn-shaped dessert, 70% Venezuelan chocolate, white chocolate ganache, coffee gel, vanilla ice cream
+
+My favorite dessert, not only because of the taste but because of how clever and cute it is. I just found it so cool that it's shaped like the Matterhorn, sprinkled with powdered-sugar snow.
+
+I did find it funny, though, that they used Venezuelan chocolate instead of a Swiss one. Maybe they were trying to subvert expectations? Either way it paid off, because it was really good. Combined with the white chocolate ganache and the vanilla ice cream, it was a delight.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/schweizerhof-matterhorn-2.avif",
+    "https://cdn.amedpal.com/food/schweizerhof-matterhorn-3.avif",
+  ]}
+  alt="Matterhorn 4478 dessert at Schweizerhof Kitchen"
+/>
+
+<RatingBlock value={frontmatter.rating} />

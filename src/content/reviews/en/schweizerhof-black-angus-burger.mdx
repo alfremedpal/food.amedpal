@@ -1,0 +1,36 @@
+---
+title: MRH Black Angus Burger
+description: Possibly the best burger I have ever had, with meat that melts in your mouth and a killer smoked sauce.
+lang: en
+pubDate: 2026-10-10T12:03:00Z
+rating: 5
+place: Schweizerhof Kitchen
+location: Zermatt
+price:
+  amount: 40
+  currency: CHF
+establishment: en/schweizerhof-kitchen
+tags: [burger, beef]
+translationKey: schweizerhof-black-angus-burger
+heroImage: https://cdn.amedpal.com/food/schweizerhof-burger-1.avif
+draft: false
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Brioche bun, smoked sauce, aged cheddar, red onion, salad, tomato, pickles, French fries
+
+Probably one of the best burgers I have ever had. The meat was so tender, juicy, and flavorful that it just melted in your mouth. It came with a "smoked sauce" (I asked, and apparently it was just smoked mayo or something) that elevates the whole thing, _and_ it also goes great with the French fries, no ketchup needed (and to be honest, I'm not a big ketchup fan). The fries were ridiculously good too.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/schweizerhof-burger-2.avif",
+    "https://cdn.amedpal.com/food/schweizerhof-burger-3.avif",
+  ]}
+  alt="MRH Black Angus Burger at Schweizerhof Kitchen"
+/>
+
+The onions were sweet and crunchy, and the tomato felt so fresh you'd think it had been harvested that very same day. What an amazing burger.
+
+<RatingBlock value={frontmatter.rating} />

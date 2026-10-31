@@ -1,0 +1,36 @@
+---
+title: Matterhorn 4478
+description: Un postre con forma del Matterhorn, tan ingenioso como delicioso.
+lang: es
+pubDate: 2026-10-10T12:01:00Z
+rating: 5
+place: Schweizerhof Kitchen
+location: Zermatt
+price:
+  amount: 18
+  currency: CHF
+establishment: es/schweizerhof-kitchen
+tags: [postre, chocolate]
+translationKey: schweizerhof-matterhorn-4478
+heroImage: https://cdn.amedpal.com/food/schweizerhof-matterhorn-1.avif
+draft: false
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Postre con forma del Matterhorn, chocolate venezolano 70%, ganache de chocolate blanco, gel de café, helado de vainilla
+
+Mi postre favorito, no solo por el sabor, sino por lo ingenioso y lindo que es. Se me hizo súper padre que tenga la forma del Matterhorn, espolvoreado con nieve de azúcar glas.
+
+Eso sí, se me hizo chistoso que usaran chocolate venezolano en vez de uno suizo. ¿Tal vez querían romper con las expectativas? De cualquier forma valió la pena, porque estaba muy bueno. Combinado con la ganache de chocolate blanco y el helado de vainilla, fue un deleite.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/schweizerhof-matterhorn-2.avif",
+    "https://cdn.amedpal.com/food/schweizerhof-matterhorn-3.avif",
+  ]}
+  alt="Matterhorn 4478 dessert at Schweizerhof Kitchen"
+/>
+
+<RatingBlock value={frontmatter.rating} />
