@@ -8,6 +8,8 @@ interface Props {
 const { value, showValue = true, class: className } = Astro.props;
 const clamped = Math.max(0, Math.min(5, value));
 const pct = (clamped / 5) * 100;
+// Drop the decimal for whole numbers (5, not 5.0) but keep halves (4.5).
+const label = Number.isInteger(clamped) ? String(clamped) : clamped.toFixed(1);
 ---
 
 <span class:list={['rating-wrap', className]}>
@@ -15,7 +17,7 @@ const pct = (clamped / 5) * 100;
     <span class="stars-bg" aria-hidden="true">★★★★★</span>
     <span class="stars-fg" style={`width:${pct}%`} aria-hidden="true">★★★★★</span>
   </span>
-  {showValue && <span class="value">{clamped.toFixed(1)}</span>}
+  {showValue && <span class="value">{label}</span>}
 </span>
 
 <style>
