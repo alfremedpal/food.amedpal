@@ -1,0 +1,15 @@
+{
+  "lang": "en",
+  "name": "Alf's food blog",
+  "short_name": "Alf's food",
+  "description": "Thoughts and feelings around food, mainly in Mérida, Yucatán.",
+  "start_url": "/en/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#16a34a",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    { "src": "/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "lang": "es",
+  "name": "El blog de comida de Alf",
+  "short_name": "Comida de Alf",
+  "description": "Pensamientos y sentimientos alrededor de la comida, principalmente en Mérida, Yucatán.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#16a34a",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    { "src": "/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}
