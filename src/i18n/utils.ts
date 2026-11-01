@@ -19,9 +19,13 @@ export function useTranslations(lang: Lang) {
  * English is prefixed with its code.
  */
 export function localizedPath(lang: Lang, path = ""): string {
-  const clean = path.replace(/^\/+/, "");
+  // Strip leading/trailing slashes so we can re-add a single trailing slash
+  // below. The site is built directory-style, so the canonical form of every
+  // URL ends in a slash; emitting that here keeps internal links, hreflang
+  // alternates, and JSON-LD URLs pointing straight at the 200 (no 30x hop).
+  const clean = path.replace(/^\/+/, "").replace(/\/+$/, "");
   const prefix = lang === defaultLang ? "" : `/${lang}`;
-  const suffix = clean ? `/${clean}` : "/";
+  const suffix = clean ? `/${clean}/` : "/";
   return `${prefix}${suffix}`.replace(/\/{2,}/g, "/");
 }
 

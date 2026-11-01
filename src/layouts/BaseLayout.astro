@@ -13,14 +13,23 @@ interface Props {
   alternates?: Partial<Record<Lang, string>>;
   /** JSON-LD document to emit in the head (Schema.org structured data). */
   schema?: object;
+  /**
+   * Social-preview image (og:image / twitter:image). Pass a page's heroImage
+   * (a full CDN URL) or a site-relative path; falls back to the brand icon for
+   * pages without their own image. Resolved to an absolute URL below.
+   */
+  image?: string;
 }
-const { lang, title, description, alternates = {}, schema } = Astro.props;
+const { lang, title, description, alternates = {}, schema, image } = Astro.props;
 const t = useTranslations(lang);
 
 const pageTitle = title ? `${title} · ${t('site.title')}` : t('site.title');
 const pageDescription = description ?? t('site.description');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const feedHref = new URL(lang === 'es' ? '/rss.xml' : '/en/rss.xml', Astro.site);
+// Absolute URL for the social card. new URL() returns an absolute `image`
+// (CDN hero) unchanged, or resolves a site-relative fallback against the site.
+const ogImage = new URL(image ?? '/icon-512.png', Astro.site);
 
 // Google Analytics (GA4): loaded only in the production build, so local
 // `pnpm dev` traffic is never counted. The measurement ID is public (it ships
@@ -87,6 +96,13 @@ const gaId = import.meta.env.PROD ? 'G-845XVYTHK8' : undefined;
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={pageTitle} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
 
     {
       schema && (
