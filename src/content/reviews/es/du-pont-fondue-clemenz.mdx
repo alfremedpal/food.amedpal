@@ -1,0 +1,33 @@
+---
+title: Fondue Clemenz
+description: Un fondue aromático y con mucha hierba, pero que de todos modos sabía un poco plano.
+lang: es
+pubDate: 2026-10-11T12:01:00Z
+rating: 3.5
+place: du Pont
+location: Zermatt
+price:
+  amount: 40
+  currency: CHF
+establishment: es/du-pont
+tags: [fondue, queso]
+translationKey: du-pont-fondue-clemenz
+draft: false
+heroImage: https://cdn.amedpal.com/food/du-pont-herbs-fondue-1.avif
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Hierbas frescas · precio por persona
+
+Un fondue con un nivel de alcohol _ligero_, y muy aromático por las hierbas (obvio), pero que aun así sabía un poco plano. Me encontré con la necesidad de agregarle una pizquita de sal y chile en polvo cada dos bocados para conseguir ese toque extra que le faltaba.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/du-pont-herbs-fondue-2.avif"]}
+  alt="Fondue Clemenz en du Pont"
+/>
+
+El pan estaba bien, y también venía con papas cocidas, pero no estaban tan suaves ni mantequillosas como esperaba.
+
+<RatingBlock value={frontmatter.rating} />
