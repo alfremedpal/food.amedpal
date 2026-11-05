@@ -1,0 +1,29 @@
+---
+title: Traditional Tiramisu
+description: A solid, moist tiramisu that goes easy on the coffee.
+lang: en
+pubDate: 2026-10-13T12:02:00Z
+rating: 4
+place: La Pasta Bistrot
+location: Como
+price:
+  amount: 9
+  currency: EUR
+establishment: en/la-pasta-bistrot
+tags: [dessert, tiramisu]
+translationKey: la-pasta-tiramisu
+draft: false
+heroImage: https://cdn.amedpal.com/food/la-pasta-bistrot-tiramisu-1.avif
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+Solid structure, moist interior, not too strong on the coffee flavor. It was good.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/la-pasta-bistrot-tiramisu-2.avif"]}
+  alt="Tiramisú tradicional en La Pasta Bistrot"
+/>
+
+<RatingBlock value={frontmatter.rating} />

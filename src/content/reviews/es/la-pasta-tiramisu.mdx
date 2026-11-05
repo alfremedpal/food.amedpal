@@ -1,0 +1,29 @@
+---
+title: Tiramisú tradicional
+description: Un tiramisú firme y húmedo que no carga demasiado el café.
+lang: es
+pubDate: 2026-10-13T12:02:00Z
+rating: 4
+place: La Pasta Bistrot
+location: Como
+price:
+  amount: 9
+  currency: EUR
+establishment: es/la-pasta-bistrot
+tags: [postre, tiramisu]
+translationKey: la-pasta-tiramisu
+draft: false
+heroImage: https://cdn.amedpal.com/food/la-pasta-bistrot-tiramisu-1.avif
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+Estructura firme, interior húmedo, no demasiado intenso en el sabor a café. Estuvo bueno.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/la-pasta-bistrot-tiramisu-2.avif"]}
+  alt="Tiramisú tradicional en La Pasta Bistrot"
+/>
+
+<RatingBlock value={frontmatter.rating} />

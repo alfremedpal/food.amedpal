@@ -1,0 +1,31 @@
+---
+title: Carbonara Mezze Maniche
+description: "La mejor carbonara que he probado: cremosa, con cuerpo y de un brillo precioso."
+lang: es
+pubDate: 2026-10-13T12:01:00Z
+rating: 4.5
+place: La Pasta Bistrot
+location: Como
+price:
+  amount: 17
+  currency: EUR
+establishment: es/la-pasta-bistrot
+tags: [pasta, carbonara]
+translationKey: la-pasta-carbonara
+draft: false
+heroImage: https://cdn.amedpal.com/food/la-pasta-bistrot-carbonara-1.avif
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+La mejor carbonara que he probado en mi vida. Estaba súper cremosa y con mucho cuerpo, y tenía un color amarillo intenso, brilloso y hermoso que la hacía resaltar. La pancetta estaba estúpidamente buena; con el punto justo de sal y de lo crujiente, mejoraba cada bocado un montón. Cocida a la perfección y, obviamente, increíble con un poco de parmesano extra.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/la-pasta-bistrot-carbonara-2.avif"]}
+  alt="Half Sleeve Carbonara at La Pasta Bistrot"
+/>
+Mi único deseo sería que tuviera más pancetta, y tal vez tantito más de salsa
+también.
+
+<RatingBlock value={frontmatter.rating} />
