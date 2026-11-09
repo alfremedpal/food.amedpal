@@ -48,8 +48,8 @@ const schema = jsonLdGraph(
       ) : (
         <>
           <div class="grid">
-            {reviews.map((review) => (
-              <ReviewCard review={review} lang={lang} />
+            {reviews.map((review, i) => (
+              <ReviewCard review={review} lang={lang} eager={i < 6} />
             ))}
           </div>
           <p class="more">

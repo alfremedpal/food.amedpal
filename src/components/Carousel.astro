@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   /** Image URLs to display, in order. */
   images: string[];
@@ -24,9 +26,11 @@ const count = images.length;
       >
         {images.map((src, i) => (
           <figure class="slide">
-            <img
+            <Image
               src={src}
               alt={alt}
+              width={1280}
+              height={960}
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"
               draggable="false"

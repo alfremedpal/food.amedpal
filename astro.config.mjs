@@ -7,6 +7,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://food.amedpal.com',
   integrations: [mdx(), sitemap()],
+  // Let Astro resize and convert CDN images to WebP at build time.
+  image: { domains: ['cdn.amedpal.com'] },
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],

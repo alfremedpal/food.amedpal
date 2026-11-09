@@ -8,8 +8,10 @@ import Rating from './Rating.astro';
 interface Props {
   review: Review;
   lang: Lang;
+  /** Load the cover image eagerly; set for cards likely to be above the fold. */
+  eager?: boolean;
 }
-const { review, lang } = Astro.props;
+const { review, lang, eager = false } = Astro.props;
 const href = localizedPath(
   lang,
   `${routeSegment(lang, 'reviews')}/${reviewSlug(review)}`,
@@ -24,7 +26,13 @@ const priceLabel = price ? formatPrice(price, lang) : undefined;
   <a class="cover" href={href}>
     {
       heroImage ? (
-        <Image src={heroImage} alt={title} width={640} height={400} />
+        <Image
+          src={heroImage}
+          alt={title}
+          width={640}
+          height={400}
+          loading={eager ? 'eager' : 'lazy'}
+        />
       ) : (
         <div class="placeholder" aria-hidden="true">🍽️</div>
       )
