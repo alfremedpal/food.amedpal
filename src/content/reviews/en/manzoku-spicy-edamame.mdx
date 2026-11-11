@@ -1,0 +1,38 @@
+---
+title: Spicy edamame
+description: The best spicy edamame in town, swimming in a thick, glossy, and truly fiery sauce.
+lang: en
+pubDate: 2026-11-03T12:01:00Z
+rating: 4.5
+place: Manzoku
+location: Mérida
+price:
+  amount: 200
+  currency: MXN
+establishment: en/manzoku
+tags: [edamame, appetizer]
+translationKey: manzoku-spicy-edamame
+draft: false
+heroImage: https://cdn.amedpal.com/food/manzoku-spicy-edamame-1.jpeg
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Spicy Szechuan sauce, garlic rayu, cilantro sprouts
+
+In my opinion, the best spicy edamame in town.
+
+The edamame themselves are soft and tender, but that sauce? Oh my. It is thick, glossy, and truly _spicy_. The first few edamame aren't that covered, so it doesn't feel so bad, but as you near the end you can see the _very_ generous pool of sauce just sitting at the bottom of the bowl; the remaining edamame are soaked, and that's when the fire kicks in. And because there _will_ be leftover sauce, you can save it for another dish and give it an extra punch.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/manzoku-spicy-edamame-3.jpeg",
+    "https://cdn.amedpal.com/food/manzoku-spicy-edamame-4.jpeg",
+  ]}
+  alt="Edamames spicy en Manzoku"
+/>
+
+I live for these spicy edamame.
+
+<RatingBlock value={frontmatter.rating} />
