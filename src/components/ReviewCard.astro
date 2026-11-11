@@ -4,14 +4,19 @@ import type { Lang } from '../i18n/ui';
 import { formatDate, formatPrice, localizedPath, routeSegment } from '../i18n/utils';
 import { reviewSlug, type Review } from '../lib/reviews';
 import Rating from './Rating.astro';
+import { CARD_QUALITY, CARD_SIZES_GRID, CARD_WIDTHS } from '../lib/images';
 
 interface Props {
   review: Review;
   lang: Lang;
   /** Load the cover image eagerly; set for cards likely to be above the fold. */
   eager?: boolean;
+  /** Mark the cover as the page's likely LCP image (fetchpriority=high). Use on one card only. */
+  priority?: boolean;
+  /** `sizes` for the cover image; defaults to a regular card grid. */
+  sizes?: string;
 }
-const { review, lang, eager = false } = Astro.props;
+const { review, lang, eager = false, priority = false, sizes = CARD_SIZES_GRID } = Astro.props;
 const href = localizedPath(
   lang,
   `${routeSegment(lang, 'reviews')}/${reviewSlug(review)}`,
@@ -31,7 +36,11 @@ const priceLabel = price ? formatPrice(price, lang) : undefined;
           alt={title}
           width={640}
           height={400}
-          loading={eager ? 'eager' : 'lazy'}
+          widths={CARD_WIDTHS}
+          sizes={sizes}
+          quality={CARD_QUALITY}
+          loading={eager || priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : undefined}
         />
       ) : (
         <div class="placeholder" aria-hidden="true">🍽️</div>

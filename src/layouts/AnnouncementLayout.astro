@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { LARGE_QUALITY, LARGE_SIZES, LARGE_WIDTHS } from '../lib/images';
 import BaseLayout from './BaseLayout.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, localizedPath } from '../i18n/utils';
@@ -55,6 +56,9 @@ const { title, description, pubDate, updatedDate, heroImage } =
           alt={title}
           width={1080}
           height={620}
+          widths={LARGE_WIDTHS}
+          sizes={LARGE_SIZES}
+          quality={LARGE_QUALITY}
         />
       )
     }

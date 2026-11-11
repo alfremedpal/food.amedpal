@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import EstablishmentCard from '../components/EstablishmentCard.astro';
+import { CARD_SIZES_SCROLLER } from '../lib/images';
 import AnnouncementList from '../components/AnnouncementList.astro';
 import { getReviews } from '../lib/reviews';
 import {
@@ -49,7 +50,13 @@ const schema = jsonLdGraph(
         <>
           <div class="grid">
             {reviews.map((review, i) => (
-              <ReviewCard review={review} lang={lang} eager={i < 6} />
+              <ReviewCard
+                review={review}
+                lang={lang}
+                eager={i < 6}
+                priority={i === 0}
+                sizes={CARD_SIZES_SCROLLER}
+              />
             ))}
           </div>
           <p class="more">
@@ -73,6 +80,7 @@ const schema = jsonLdGraph(
                 establishment={establishment}
                 lang={lang}
                 dishCount={dishCounts[i]}
+                sizes={CARD_SIZES_SCROLLER}
               />
             ))}
           </div>

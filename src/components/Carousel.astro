@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { LARGE_QUALITY, LARGE_SIZES, LARGE_WIDTHS } from '../lib/images';
 
 interface Props {
   /** Image URLs to display, in order. */
@@ -31,6 +32,9 @@ const count = images.length;
               alt={alt}
               width={1280}
               height={960}
+              widths={LARGE_WIDTHS}
+              sizes={LARGE_SIZES}
+              quality={LARGE_QUALITY}
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"
               draggable="false"

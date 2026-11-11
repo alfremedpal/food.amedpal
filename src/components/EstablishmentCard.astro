@@ -5,14 +5,17 @@ import { localizedPath, routeSegment } from '../i18n/utils';
 import { establishmentSlug, type Establishment } from '../lib/establishments';
 import Rating from './Rating.astro';
 import HeroPlaceholder from './HeroPlaceholder.astro';
+import { CARD_QUALITY, CARD_SIZES_GRID, CARD_WIDTHS } from '../lib/images';
 
 interface Props {
   establishment: Establishment;
   lang: Lang;
   /** How many dishes are reviewed here, shown as a small count. */
   dishCount?: number;
+  /** `sizes` for the cover image; defaults to a regular card grid. */
+  sizes?: string;
 }
-const { establishment, lang, dishCount } = Astro.props;
+const { establishment, lang, dishCount, sizes = CARD_SIZES_GRID } = Astro.props;
 const href = localizedPath(
   lang,
   `${routeSegment(lang, 'places')}/${establishmentSlug(establishment)}`,
@@ -25,7 +28,15 @@ const { title, description, tags, heroImage, rating, location } =
   <a class="cover" href={href}>
     {
       heroImage ? (
-        <Image src={heroImage} alt={title} width={640} height={400} />
+        <Image
+          src={heroImage}
+          alt={title}
+          width={640}
+          height={400}
+          widths={CARD_WIDTHS}
+          sizes={sizes}
+          quality={CARD_QUALITY}
+        />
       ) : (
         <HeroPlaceholder title={title} />
       )
