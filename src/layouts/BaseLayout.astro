@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { languages, type Lang } from '../i18n/ui';
@@ -74,12 +75,7 @@ const gaId = import.meta.env.PROD ? 'G-845XVYTHK8' : undefined;
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17181a" />
     <meta name="generator" content={Astro.generator} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap"
-    />
+    <Font cssVariable="--font-montserrat" preload={[{ style: 'normal' }]} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
