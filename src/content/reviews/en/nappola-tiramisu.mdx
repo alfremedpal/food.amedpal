@@ -1,0 +1,33 @@
+---
+title: Tiramisu
+description: A rum-spiked tiramisu with good flavor, but a little dry, floury, and heavier than expected.
+lang: en
+pubDate: 2026-11-06T12:03:00Z
+rating: 3.5
+place: Náppola
+location: Mérida
+price:
+  amount: 250
+  currency: MXN
+establishment: en/nappola
+tags: [dessert, italian]
+translationKey: nappola-tiramisu
+draft: false
+heroImage: https://cdn.amedpal.com/food/nappola-tiramisu-1.jpeg
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Ladyfingers soaked in coffee with mascarpone and rum
+
+I feel like tiramisus in restaurants usually don't have rum in them (or at least they don't say they do), which is funny, because I'm pretty sure that's the "traditional" way to make it. If I had to guess why they don't use rum, I'd say it's because it makes them taste a little more bitter and feel heavier.
+
+Anyway, the tiramisu was a little bit dry and floury, and it definitely hit my stomach with more punch than I expected (maybe I was sick that day? Who knows). The flavor was good, though.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/nappola-tiramisu-2.jpeg"]}
+  alt="Tiramisu at Náppola"
+/>
+
+<RatingBlock value={frontmatter.rating} />

@@ -1,0 +1,31 @@
+---
+title: Minestrone soup
+description: A soup with a great flavor foundation that desperately needs more salt and more tender vegetables.
+lang: en
+pubDate: 2026-11-06T12:01:00Z
+rating: 3
+place: Náppola
+location: Mérida
+price:
+  amount: 150
+  currency: MXN
+establishment: en/nappola
+tags: [soup, italian]
+translationKey: nappola-minestrone-soup
+draft: false
+heroImage: https://cdn.amedpal.com/food/nappola-minestrone-1.jpeg
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Vegetable, pasta, and bean soup with a touch of Parmesan
+
+You can tell the soup has a great flavor foundation; unfortunately, it can't really shine, as it desperately needs more salt, probably on the vegetables, since they also taste flat. And speaking of the vegetables, I'd have liked them better if they were more tender; some of them felt almost uncooked.
+
+<Carousel
+  images={[]}
+  alt="Minestrone soup at Náppola"
+/>
+
+<RatingBlock value={frontmatter.rating} />

@@ -1,0 +1,38 @@
+---
+title: Burrata pizza
+description: An airy crust with a thin, almost crunchy base and a salty sauce, though the burrata doesn't quite fit the toppings.
+lang: en
+pubDate: 2026-11-06T12:02:00Z
+rating: 3.5
+place: Náppola
+location: Mérida
+price:
+  amount: 350
+  currency: MXN
+establishment: en/nappola
+tags: [pizza, italian]
+translationKey: nappola-burrata-pizza
+draft: false
+heroImage: https://cdn.amedpal.com/food/nappola-pizza-burrata-1.jpeg
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Prosciutto, burrata, basil, and almonds
+
+I don't know if it was on purpose or not, but I liked that the pizza didn't have a perfectly circular shape and was a little bit amorphous instead.
+
+The dough was airy at the crust, but the base was thin and almost crunchy, which I liked, and the almonds also helped with the crunchy texture. The sauce was saltier than I'd expect on a pizza, but I really liked it too.
+
+<Carousel
+  images={[
+    "https://cdn.amedpal.com/food/nappola-pizza-burrata-2.jpeg",
+    "https://cdn.amedpal.com/food/nappola-pizza-burrata-3.jpeg",
+  ]}
+  alt="Burrata pizza at Náppola"
+/>
+
+My only complaint would be that I didn't feel like the burrata was a great match for these toppings, and because it has burrata, its price was a little bit higher than I'd have liked.
+
+<RatingBlock value={frontmatter.rating} />

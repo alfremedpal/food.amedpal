@@ -1,0 +1,33 @@
+---
+title: Tiramisú
+description: Un tiramisú con ron y buen sabor, pero algo seco, harinoso y más pesado de lo esperado.
+lang: es
+pubDate: 2026-11-06T12:03:00Z
+rating: 3.5
+place: Náppola
+location: Mérida
+price:
+  amount: 250
+  currency: MXN
+establishment: es/nappola
+tags: [postre, italiano]
+translationKey: nappola-tiramisu
+draft: false
+heroImage: https://cdn.amedpal.com/food/nappola-tiramisu-1.jpeg
+---
+
+import Carousel from "../../../components/Carousel.astro";
+import RatingBlock from "../../../components/RatingBlock.astro";
+
+> Soletas remojadas en café con mascarpone y ron
+
+Siento que los tiramisús de restaurante normalmente no llevan ron (o por lo menos no dicen que lo lleven), lo cual es curioso, porque estoy casi seguro de que esa es la forma "tradicional" de hacerlo. Si tuviera que adivinar por qué no le ponen ron, diría que es porque eso hace que sepa un poco más amargo y que se sienta más pesado.
+
+En fin, el tiramisú estaba un poquito seco y harinoso, y definitivamente me pegó en el estómago más fuerte de lo que pensaba (¿a lo mejor ese día andaba malo? Quién sabe). El sabor estaba rico.
+
+<Carousel
+  images={["https://cdn.amedpal.com/food/nappola-tiramisu-2.jpeg"]}
+  alt="Tiramisú en Náppola"
+/>
+
+<RatingBlock value={frontmatter.rating} />
