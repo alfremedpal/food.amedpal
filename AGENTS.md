@@ -34,7 +34,7 @@ Consult these guides before working on related tasks:
 
 ```text
 src/
-├── components/        # Header, Footer, ReviewCard, EstablishmentCard, Rating, ThemeToggle, LanguagePicker
+├── components/        # Header, Footer, ReviewCard, EstablishmentCard, Rating, ThemeToggle, LanguagePicker, SearchButton
 ├── content/
 │   ├── reviews/
 │   │   ├── es/        # Spanish reviews (MDX)
@@ -182,3 +182,16 @@ Announcement body in MDX…
 
 The sitemap is only emitted by `astro build`, not the dev server; the RSS
 endpoints work in both.
+
+## Search
+
+[Pagefind](https://pagefind.app) indexes the built site: `pnpm build` runs
+`pagefind --site dist` after `astro build`, writing the index to
+`dist/pagefind/`. Only review, establishment and announcement pages are indexed
+(their `<article>` carries `data-pagefind-body`; breadcrumbs are
+`data-pagefind-ignore`). Pagefind splits the index by `<html lang>`, so each
+language searches only its own pages. The header search button
+(`src/components/SearchButton.astro`) opens the Pagefind Component UI modal,
+loading its JS/CSS only on first click; it's themed via `--pf-*` variables
+mapped to the site tokens. Search only works on the built site
+(`pnpm build && pnpm preview`), not in `pnpm dev`.

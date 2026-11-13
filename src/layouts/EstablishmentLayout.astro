@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { LARGE_QUALITY, LARGE_SIZES, LARGE_WIDTHS } from '../lib/images';
 import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
+import RatingBlock from '../components/RatingBlock.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import HeroPlaceholder from '../components/HeroPlaceholder.astro';
@@ -66,7 +67,7 @@ const schema = jsonLdGraph([
   schema={schema}
   image={heroImage}
 >
-  <article class="place">
+  <article class="place" data-pagefind-body>
     <Breadcrumbs crumbs={crumbs} label={t('breadcrumb.label')} />
 
     <header class="head">
@@ -127,6 +128,7 @@ const schema = jsonLdGraph([
 
     <div class="prose">
       <slot />
+      <RatingBlock value={rating} />
     </div>
 
     <section class="dishes">

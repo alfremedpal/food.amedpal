@@ -4,6 +4,7 @@ import { LARGE_QUALITY, LARGE_SIZES, LARGE_WIDTHS } from '../lib/images';
 import { getEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Rating from '../components/Rating.astro';
+import RatingBlock from '../components/RatingBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, formatDate, formatPrice, localizedPath, routeSegment } from '../i18n/utils';
@@ -94,7 +95,7 @@ const schema = jsonLdGraph([
   schema={schema}
   image={heroImage}
 >
-  <article class="review">
+  <article class="review" data-pagefind-body>
     <Breadcrumbs crumbs={crumbs} label={t('breadcrumb.label')} />
 
     <header class="head">
@@ -160,6 +161,7 @@ const schema = jsonLdGraph([
 
     <div class="prose">
       <slot />
+      <RatingBlock value={rating} />
     </div>
   </article>
 </BaseLayout>

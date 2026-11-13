@@ -7,6 +7,7 @@ import {
 } from '../i18n/utils';
 import ThemeToggle from './ThemeToggle.astro';
 import LanguagePicker from './LanguagePicker.astro';
+import SearchButton from './SearchButton.astro';
 
 interface Props {
   lang: Lang;
@@ -54,6 +55,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
         <ThemeToggle lang={lang} />
       </div>
 
+      <SearchButton lang={lang} />
       <LanguagePicker lang={lang} alternates={alternates} />
 
       <button
