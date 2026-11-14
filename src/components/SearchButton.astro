@@ -69,8 +69,16 @@ const t = useTranslations(lang);
         return;
       }
       if (!modal) {
-        // An empty <pagefind-modal> renders its default input + results.
+        // Same as the default modal contents, but with at most one
+        // sub-result (section heading match) per result.
         modal = document.createElement('pagefind-modal');
+        modal.innerHTML = `
+          <pagefind-modal-header><pagefind-input></pagefind-input></pagefind-modal-header>
+          <pagefind-modal-body>
+            <pagefind-summary></pagefind-summary>
+            <pagefind-results max-sub-results="1"></pagefind-results>
+          </pagefind-modal-body>
+          <pagefind-modal-footer><pagefind-keyboard-hints></pagefind-keyboard-hints></pagefind-modal-footer>`;
         document.body.append(modal);
       }
       modal.open();

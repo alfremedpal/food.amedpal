@@ -188,8 +188,9 @@ endpoints work in both.
 [Pagefind](https://pagefind.app) indexes the built site: `pnpm build` runs
 `pagefind --site dist` after `astro build`, writing the index to
 `dist/pagefind/`. Only review, establishment and announcement pages are indexed
-(their `<article>` carries `data-pagefind-body`; breadcrumbs are
-`data-pagefind-ignore`). Pagefind splits the index by `<html lang>`, so each
+(their `<article>` carries `data-pagefind-body`). Only the writing is indexed:
+breadcrumbs, star ratings, price, dates, tags and a place's dish list are
+`data-pagefind-ignore`, so they don't clutter result excerpts. Pagefind splits the index by `<html lang>`, so each
 language searches only its own pages. The header search button
 (`src/components/SearchButton.astro`) opens the Pagefind Component UI modal,
 loading its JS/CSS only on first click; it's themed via `--pf-*` variables

@@ -31,7 +31,7 @@ const { title, description, pubDate, updatedDate, heroImage } =
       <span class="badge">📣</span>
       <h1>{title}</h1>
       <p class="lead">{description}</p>
-      <div class="meta">
+      <div class="meta" data-pagefind-ignore>
         <time datetime={pubDate.toISOString()}>
           {t('announcement.published')} {formatDate(pubDate, lang)}
         </time>

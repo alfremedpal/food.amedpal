@@ -73,12 +73,12 @@ const schema = jsonLdGraph([
     <header class="head">
       <h1>{title}</h1>
       {location && <p class="where">{location}</p>}
-      <div class="score">
+      <div class="score" data-pagefind-ignore>
         <span class="score-label">{t('place.rating')}</span>
         <Rating value={rating} />
       </div>
       <p class="lead">{description}</p>
-      <div class="meta">
+      <div class="meta" data-pagefind-ignore>
         <time datetime={pubDate.toISOString()}>
           {t('review.published')} {formatDate(pubDate, lang)}
         </time>
@@ -95,7 +95,7 @@ const schema = jsonLdGraph([
       </div>
       {
         tags.length > 0 && (
-          <div class="tags">
+          <div class="tags" data-pagefind-ignore>
             {tags.map((tag) => (
               <span class="tag">{tag}</span>
             ))}
@@ -131,7 +131,7 @@ const schema = jsonLdGraph([
       <RatingBlock value={rating} />
     </div>
 
-    <section class="dishes">
+    <section class="dishes" data-pagefind-ignore>
       <h2>{t('place.dishes')}</h2>
       {
         dishes.length === 0 ? (
